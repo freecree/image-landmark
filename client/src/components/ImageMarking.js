@@ -54,13 +54,12 @@ const ImageMarking = () => {
       image.onload = () => {
         draw();
       }
-
+                    
       function draw() {
         ctx.drawImage(image, 0, 0);
         links.forEach(function(link) {
           let i0 = link[0],
             i1 = link[1];
-
           ctx.lineWidth = 2;
           ctx.beginPath();
           ctx.moveTo(nodes[i0].x, nodes[i0].y);
@@ -88,6 +87,25 @@ const ImageMarking = () => {
       function getNodeByPos(pos) {
         let result;
         nodes.forEach(function(node) {
+          
+          if ((pos.x >= node.x - radius) && (pos.x < node.x + radius) && (pos.y >= node.y - radius) && (pos.y < node.y + radius)) {
+            result = node;
+          }
+        });
+        return result;
+      };
+
+      function getMousePosFromEvent(evt) {
+        let rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      };
+    
+      function getNodeByPos(pos) {
+        let result;
+        nodes.forEach(function(node) {
           if ((pos.x >= node.x - radius) && (pos.x < node.x + radius) && (pos.y >= node.y - radius) && (pos.y < node.y + radius)) {
             result = node;
           }
@@ -96,7 +114,7 @@ const ImageMarking = () => {
       };
 
       canvas.addEventListener('mousedown', function(event) {
-        let pos = getMousePosFromEvent(event, canvas);
+        let pos = getMousePosFromEvent(event);
         dragNode = getNodeByPos(pos);
         if (dragNode !== undefined) {
           dragPoint = {
