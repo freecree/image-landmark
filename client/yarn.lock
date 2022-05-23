@@ -1430,6 +1430,16 @@
   "resolved" "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.3.tgz"
   "version" "2.0.3"
 
+"@mediapipe/camera_utils@^0.3.1640029074":
+  "integrity" "sha512-jRV/Mp2lgqNYT68TeVRu/Xq+ptZO9F9vCjxzQsA3VM2r7oXg0TrnfO9De2KKOUTpt0p28dKHs625J8GdWjha8A=="
+  "resolved" "https://registry.npmjs.org/@mediapipe/camera_utils/-/camera_utils-0.3.1640029074.tgz"
+  "version" "0.3.1640029074"
+
+"@mediapipe/hands@^0.4.1646424915":
+  "integrity" "sha512-R1VM3DRCKTA49nVvkprInYUXx8cKisi86y6/9clvYA0vApmLqTjIHQFibJDHwSdy4Rykn2CjWywQAWw5+mGw8w=="
+  "resolved" "https://registry.npmjs.org/@mediapipe/hands/-/hands-0.4.1646424915.tgz"
+  "version" "0.4.1646424915"
+
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -7181,7 +7191,7 @@
     "strip-ansi" "^6.0.1"
     "text-table" "^0.2.0"
 
-"react-dom@^18.0.0", "react-dom@^18.1.0":
+"react-dom@^18.0.0", "react-dom@^18.1.0", "react-dom@>=16.2.0":
   "integrity" "sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.1.0.tgz"
   "version" "18.1.0"
@@ -7269,7 +7279,12 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
-"react@^16.8.0 || ^17 || ^18", "react@^18.0.0", "react@^18.1.0", "react@>= 16":
+"react-webcam@^7.0.1":
+  "integrity" "sha512-8E/Eb/7ksKwn5QdLn67tOR7+TdP9BZdu6E5/DSt20v8yfW/s0VGBigE6VA7R4278mBuBUowovAB3DkCfVmSPvA=="
+  "resolved" "https://registry.npmjs.org/react-webcam/-/react-webcam-7.0.1.tgz"
+  "version" "7.0.1"
+
+"react@^16.8.0 || ^17 || ^18", "react@^18.0.0", "react@^18.1.0", "react@>= 16", "react@>=16.2.0":
   "integrity" "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
   "version" "18.1.0"
