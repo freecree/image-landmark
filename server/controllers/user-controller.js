@@ -67,6 +67,22 @@ class UserController {
             next(e);
         }
     }
+    async markImage(req, res, next) {
+        try {
+            let spawn = require('child_process').spawn;
+            let process = spawn('python', ['./imageLandMark.py']);
+            process.stdout.on('data', function (data) {
+            //     res.send(data.toString());
+                
+                console.log("On data:", data.toString().replace(/'/g, '"'));
+                //return res.json(JSON.stringify(data.toString()));
+                //return res.json(JSON.parse(data));
+                return res.json(JSON.parse(data.toString().replace(/'/g, '"')));
+            });
+        } catch(e) {
+            next(e);
+        }
+    }
     
 }
 
