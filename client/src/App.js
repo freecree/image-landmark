@@ -1,47 +1,38 @@
 import './App.css';
-import LoginForm from './components/LoginForm';
-import React, { useContext, useEffect, useState} from 'react';
 import { Context } from './index';
+import React, { useContext, useEffect, useState} from 'react';
 import { observer } from 'mobx-react-lite';
-import UserService from './services/UserService';
-import ImageMarking from './components/ImageMarking';
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import Main from './components/Main';
+import Editor from './components/Editor';
+import LoginForm from './components/LoginForm';
+
 
 function App() {
   const {store} = useContext(Context);
-  const [users, setUsers] = useState([]);
-  
-   useEffect(() => {
+
+  useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }
   },[]);
-
-
-  async function getUsers() {
-    try {
-      const response = await UserService.fetchUsers();
-      console.log("resp: ", response.data);
-      setUsers(response.data);
-    } catch(e) {
-      console.log(e);
-    }
-  }
 
   if (!store.isAuth) {
     console.log("auth");
     return(<LoginForm/>);
   } 
   
-  return (
-    <div className="App">
-      <h1>{store.isAuth ? `Пользователь авторизован ${store.user.email}` : 'АВТОРИЗУЙТЕСЬ'}</h1>
-      <div className="container">
-      {/* <button onClick={getUsers}>Получить пользователей</button>
-      {users.map(u => <div key={u.email}>{u.email}</div>)} */}
-      <ImageMarking/>
-      
-      </div>
+  return(
+    <div className='container'>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path='/' element={<Main/>}/>
+          <Route path='/edit/:image' element={<Editor/>}/>
+          <Route path="*" element={<Navigate to ="/" />}/>
+        </Routes>
+      </BrowserRouter>
     </div>
-  );
+  )
+  
 }
 export default observer(App);

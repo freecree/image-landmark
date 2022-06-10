@@ -1,9 +1,15 @@
 const userService = require('../service/user-service');
 const {validationResult} = require('express-validator');
 const ApiError = require('../exceptions/api-error');
+const fileService = require('../service/file-service');
+const fileModel = require('../models/file-model');
+const markingService = require('../service/marking-service');
+
+const spawn = require('child_process').spawn;
 
 
 class UserController {
+    
     async registration(req, res, next) {
         try {
             const errors = validationResult(req);
@@ -12,6 +18,8 @@ class UserController {
             }
             const {email, password} = req.body;
             const userData = await userService.registration(email, password);
+            fileService.createDir(new fileModel({user: userData.user.id, name: ''}));
+
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
             return res.json(userData);
         } catch(e) {
@@ -68,17 +76,36 @@ class UserController {
         }
     }
     async markImage(req, res, next) {
+        
         try {
-            let spawn = require('child_process').spawn;
-            let process = spawn('python', ['./imageLandMark.py']);
-            process.stdout.on('data', function (data) {
-                console.log("On data:", data.toString().replace(/'/g, '"'));
-                return res.json(JSON.parse(data.toString().replace(/'/g, '"')));
-            });
+            let promise = markingService.markImage('628e3c52f213273edf912e12', ['image7.png']);
+            promise.then(function(results) {
+                res.json(results);
+            }, function(errors) {
+                next(errors)
+                // res.json(errors);
+            })
+            
         } catch(e) {
             next(e);
         }
     }
+
+    
+    // async markImage(req, res, next) {
+        
+    //     try {
+    //         console.log("In Controller::markImage");
+    //         const process = spawn('python', ['./imageLandMark.py', 'hi']);
+    //         process.stdout.on('data', function (data) {
+    //             console.log("On data:", data.toString().replace(/'/g, '"'));
+    //             return res.json(data.toString());
+    //             //return res.json(JSON.parse(data.toString().replace(/'/g, '"')));
+    //         });
+    //     } catch(e) {
+    //         next(e);
+    //     }
+    // }
     
 }
 

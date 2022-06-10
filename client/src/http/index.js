@@ -13,11 +13,9 @@ $api.interceptors.request.use((config) => {
 })
 
 $api.interceptors.response.use((config) => {
-    console.log("config: ", config);
     return config;
 }, async error => {
     const originalRequest = error.config;
-    console.log("error.config: ", error.config);
     if (error.response.status == 401 && error.config && !error.config._isRetry) {
         try {
             originalRequest._isRetry = true;
@@ -25,7 +23,7 @@ $api.interceptors.response.use((config) => {
             localStorage.setItem('token', response.data.accessToken);
             return $api.request(originalRequest);
         } catch(e) {
-            console.log("Не авторизован");
+            console.log("Тot authorized");
         }
     }
     throw error;
