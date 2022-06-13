@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.canvas {
-  margin-top: 50px;
-  border: 1px solid #000;
-}
-
 .btn__upload-input {
   display: none;
 }
@@ -16,10 +11,20 @@
   margin: 0 auto;
 }
 
+.main__buttons {
+  display: flex;
+  justify-content: center;
+}
+
 .btn__upload-label {
   border: 1px solid blue;
   padding: 10px 20px;
   display: inline-block;
+  cursor: pointer;
+}
+
+.btn_markings {
+  margin-left: 50px;
   cursor: pointer;
 }
 
@@ -47,12 +52,23 @@
 
 .wrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start
+}
+
+.editor__content {
+  margin-top: 50px;
 }
 
 .editor__image-block {
   max-width: 60%;
   max-height: 85vh;
   overflow: auto;
+}
+
+.canvas {
+  border: 1px solid #000;
+}
+
+.editor__btn {
+  margin-left: 50px;
 }

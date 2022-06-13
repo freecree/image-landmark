@@ -19,17 +19,12 @@ const Editor = () => {
             <h2>
                 {location.state.img.name}
             </h2>
-            <div className='wrapper'>
-                <div className='editor__image-block'>
-                   <ImageMarking
-                    markings={location.state.img.markings}
-                    path={location.state.img.path}
-                    name={location.state.img.name}/> 
-                </div>
-                
-            </div>
-
-
+            
+            <ImageMarking
+            markings={location.state.img.markings}
+            path={location.state.img.path}
+            name={location.state.img.name}
+            id={location.state.img.id}/> 
         </div>
     );
 };

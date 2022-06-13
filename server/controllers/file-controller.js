@@ -75,7 +75,13 @@ class FileController {
 
     async deleteFile(req, res, next) {
     }
-    async getFile(req, res, next) {
+    async updateFile(req, res, next) {
+        try {   
+            const file = await FileModel.findOneAndUpdate({ _id: req.params['id'] }, req.body, {new: true});
+            return res.json(file);
+        } catch(e) {
+            next(e);
+        }
     }
     async getFiles(req, res, next) {
         try {

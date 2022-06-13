@@ -13,6 +13,16 @@ import Catalog from './Catalog';
 function Main() {
   const {store} = useContext(Context);
   const [users, setUsers] = useState([]);
+
+  // const [images, setImages] = useState();
+
+    async function getImages() {
+        console.log("In catalog getImages: ");
+        const data = FileService.fetchImages();
+        // setImages(data);
+        return data;
+    }
+
   
   async function getUsers() {
     try {
@@ -37,16 +47,15 @@ function Main() {
   return (
     <div className="App">
       <h1>{store.isAuth ? `Пользователь авторизован ${store.user.email}` : 'АВТОРИЗУЙТЕСЬ'}</h1>
+      <div className='main__buttons'>
         <div className='btn'>
           <label htmlFor='btn__upload-input' className='btn__upload-label'>Завантажити файл</label>
           <input multiple={true} onChange={(event)=>fileUploaderHandler(event)} type='file' id='btn__upload-input'className='btn__upload-input' ></input>
         </div>
-        <button onClick={getUsers}>Получить пользователей</button>
+        <button className='btn btn_markings' onClick={getUsers}>Отримати розмітку</button>
         {users.map(u => <div key={u.email}>{u.email}</div>)}
-
-        <Catalog/>
-        {/* <ImageMarking/> */}
-      
+      </div>
+      <Catalog/>
     </div>
   );
 

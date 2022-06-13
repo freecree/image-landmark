@@ -18,5 +18,8 @@ export default class FileService {
     static async fetchImages() {
         return $api.get('/file');
     }    
+    static async updateFile(id, markings) {
+        return $api.put(`/file/${id}`, {markings});
+    }    
 
 }

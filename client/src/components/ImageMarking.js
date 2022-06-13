@@ -3,23 +3,20 @@ import FileService from '../services/FileService';
 
 
 const ImageMarking = (props) => {
-    const [nodes, setNodes] = useState(props.markings);
 
-    const [reqState, setReqState] = useState(false);  
     const canvasRef = useRef(null);
     const radius = 5;
+    const [nodes, setNodes] = useState(props.markings);
     let dragNode, dragPoint;
+    const [imageSize, setImageSize] = useState({width: 0, height: 0});
+
 
     useEffect(() => {
-      // console.log("In useEffect");
-      // console.log(help);
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
       
       const image = new Image();
       image.src = `${props.path}/${props.name}`;
-
-      
 
       const links = [[0, 1], [1, 2], [2, 3], [3, 4],
                     [0, 5], [5, 6], [6, 7], [7, 8],
@@ -29,18 +26,18 @@ const ImageMarking = (props) => {
                     [5, 9], [9, 13], [13, 17]];
 
       image.onload = () => {
-        setNodes(nodes.map(node => {
+        setImageSize({width: image.naturalWidth, height: image.naturalHeight});
+        nodes.forEach(node => {
           node.x*=image.naturalWidth; 
           node.y*=image.naturalHeight;
-          return node;
-        }))
+        })
+        
         canvas.width = image.naturalWidth;
         canvas.height = image.naturalHeight;
         draw();
       }
                     
       function draw() {
-        
         ctx.drawImage(image, 0, 0);
         links.forEach(function(link) {
           let i0 = link[0],
@@ -123,27 +120,30 @@ const ImageMarking = (props) => {
         }
       }, false);
         
-    }, [reqState])
+    }, []) //nodes
 
-
-    async function getMarking() {
-      try {
-        console.log("Marking...");
-        const response = await FileService.fetchImageMarking();
-        console.log("Marking: ", response.data);
-        //setNodes(response.data);
-        //setReqState(!reqState)
-      } catch(e) {
-        console.log(e);
-      }
+    async function updateMarkings() {
+      const resultNodes = nodes.map(node => {
+        const newNode = {
+          x: node.x/imageSize.width,
+          y: node.y/imageSize.height
+        }
+        return newNode;
+      })
+      const response = await FileService.updateFile(props.id, resultNodes);
+      console.log("Update resp: ", response);
+      //setNodes(response.data.markings);
+      
     }
 
-    // console.log("In render()");
 
     return (
-        <div>
+      <div className='wrapper editor__content'>
+        <div className='editor__image-block'>
           <canvas className='canvas' ref={canvasRef} />
         </div>
+        <button onClick={updateMarkings} className='btn editor__btn'>Зберегти</button>
+      </div>  
     );
 };
 
