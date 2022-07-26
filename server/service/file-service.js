@@ -17,6 +17,15 @@ class FileService {
             }
         })
     }
+
+    getPath(file) {
+        return `${process.env.FILE_PATH}\\${file.user}\\${file.name}`; //file.path = ''
+    }
+
+    deleteFile(file) {
+        const path = this.getPath(file);
+        fs.unlinkSync(path);
+    }
 }
 
 module.exports = new FileService();

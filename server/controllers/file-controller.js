@@ -3,6 +3,7 @@ const FileModel = require('../models/file-model');
 const UserModel = require('../models/user-model');
 const fs = require('fs');
 const markingService = require('../service/marking-service');
+const fileService = require('../service/file-service');
 const spawn = require('child_process').spawn;
 
 class FileController {
@@ -74,6 +75,25 @@ class FileController {
     }
 
     async deleteFile(req, res, next) {
+        try {
+            const file = await FileModel.findById(req.params.id);
+            if (!file) {
+                return res.status(400).json({message: "File not found"});
+            }
+            const user = await UserModel.findById(req.user.id);
+            if (!user) {
+                return res.status(400).json({message: "User not found"});
+            }
+            fileService.deleteFile(file);
+            await file.remove();
+            user.usedSpace -= file.size;
+            await user.save();
+            console.log("Delete: ", user);
+            // const file = await FileModel.findOneAndUpdate({ _id: req.params['id'] }, req.body, {new: true});
+            return res.json(file);
+        } catch(e) {
+            next(e);
+        }
     }
     async updateFile(req, res, next) {
         try {   

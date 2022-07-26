@@ -131,19 +131,23 @@ const ImageMarking = (props) => {
         return newNode;
       })
       const response = await FileService.updateFile(props.id, resultNodes);
-      console.log("Update resp: ", response);
+      console.log("Update resp: ", response?.data?.markings);
       //setNodes(response.data.markings);
       
     }
-
 
     return (
       <div className='wrapper editor__content'>
         <div className='editor__image-block'>
           <canvas className='canvas' ref={canvasRef} />
         </div>
-        <button onClick={updateMarkings} className='btn editor__btn'>Зберегти</button>
-      </div>  
+        <div className='editor__left-block'>
+          <h2>
+              {props.name}
+          </h2>
+          <button onClick={updateMarkings} className='btn btn_blue editor__btn'>Зберегти розмітку</button>
+        </div>
+      </div>
     );
 };
 

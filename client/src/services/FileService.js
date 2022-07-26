@@ -21,5 +21,8 @@ export default class FileService {
     static async updateFile(id, markings) {
         return $api.put(`/file/${id}`, {markings});
     }    
+    static async deleteFile(id, markings) {
+        return $api.delete(`/file/${id}`, {markings});
+    }    
 
 }

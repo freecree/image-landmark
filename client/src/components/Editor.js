@@ -2,24 +2,18 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import ImageMarking from './ImageMarking';
+import { Link } from 'react-router-dom';
 
 
 const Editor = () => {
-
     const location = useLocation();
 
-    
-    useEffect(()=> {
-        console.log("Location: ", location);
-        console.log("Location img: ", location.state.img);
-    }, [])
-
     return (
-        <div>
-            <h2>
-                {location.state.img.name}
-            </h2>
-            
+        <div className='editop-page'>
+            <div className='editor__heading'>
+               <Link to='/' className='editor-page__back'>Назад</Link>
+               <h1 className='main__title'>Редактор розмітки</h1>
+            </div>
             <ImageMarking
             markings={location.state.img.markings}
             path={location.state.img.path}
@@ -28,11 +22,5 @@ const Editor = () => {
         </div>
     );
 };
-
-
-Editor.propTypes = {
-
-};
-
 
 export default Editor;
