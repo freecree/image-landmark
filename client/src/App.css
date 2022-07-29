@@ -207,7 +207,7 @@ h2 {
   align-items: flex-start
 }
 
-.editop-page {
+.editor-page {
   /*padding: 60px ;*/
   height: calc(100vh - 100px);
   display: flex;
@@ -230,10 +230,9 @@ h2 {
 }
 
 .editor__image-block {
-  max-width: 65%;
-  /*max-height: 85vh;*/
-  /*height:;*/
-  overflow: auto;
+  box-sizing: content-box;
+  width: 65%;
+  overflow: overlay;
   height: calc(100vh - 80px - 150px);
 }
 
@@ -241,6 +240,4 @@ h2 {
   margin-left: 50px;
 }
 
-.canvas {
-  border: 1px solid #000;
-}
+/**/
