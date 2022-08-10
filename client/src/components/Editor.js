@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import ImageMarking from './ImageMarking';
 import { Link } from 'react-router-dom';
 
+import {observer} from 'mobx-react-lite';
 
 const Editor = () => {
     const location = useLocation();
-
+    console.log("In Editor: ", location);
     return (
         <div className='editop-page'>
             <div className='editor__heading'>
@@ -15,10 +15,7 @@ const Editor = () => {
                <h1 className='main__title'>Редактор розмітки</h1>
             </div>
             <ImageMarking
-            markings={location.state.img.markings}
-            path={location.state.img.path}
-            name={location.state.img.name}
-            id={location.state.img.id}/> 
+            imageId={location.state.imageId}/> 
         </div>
     );
 };

@@ -17,12 +17,12 @@ export default class FileService {
     }
     static async fetchImages() {
         return $api.get('/file');
-    }    
-    static async updateFile(id, markings) {
-        return $api.put(`/file/${id}`, {markings});
-    }    
-    static async deleteFile(id, markings) {
-        return $api.delete(`/file/${id}`, {markings});
-    }    
+    }
+    static async updateFile(id, data) {
+        return $api.put(`/file/${id}`, data);
+    }
+    static async deleteFile(id) {
+        return $api.delete(`/file/${id}`);
+    }
 
 }

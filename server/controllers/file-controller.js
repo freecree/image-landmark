@@ -1,10 +1,14 @@
+const fs = require('fs');
+const spawn = require('child_process').spawn;
+
 const ApiError = require('../exceptions/api-error');
 const FileModel = require('../models/file-model');
 const UserModel = require('../models/user-model');
-const fs = require('fs');
+
 const markingService = require('../service/marking-service');
 const fileService = require('../service/file-service');
-const spawn = require('child_process').spawn;
+
+const FileDto = require('../dtos/file-dto.js');
 
 class FileController {
     async uploadFile(req, res, next) {
@@ -47,7 +51,9 @@ class FileController {
                 });
                 dbFile.save();
                 user.save();
-                res.json(dbFile);
+
+                const fileDto = new FileDto(dbFile);
+                res.json(fileDto);
             }, function(errors) {
                 console.log("Rejected: ", errors);
                 next(errors);
@@ -90,15 +96,15 @@ class FileController {
             await user.save();
             console.log("Delete: ", user);
             // const file = await FileModel.findOneAndUpdate({ _id: req.params['id'] }, req.body, {new: true});
-            return res.json(file);
+            return res.json(new FileDto(file));
         } catch(e) {
             next(e);
         }
     }
     async updateFile(req, res, next) {
-        try {   
+        try {
             const file = await FileModel.findOneAndUpdate({ _id: req.params['id'] }, req.body, {new: true});
-            return res.json(file);
+            return res.json(new FileDto(file));
         } catch(e) {
             next(e);
         }
@@ -106,7 +112,12 @@ class FileController {
     async getFiles(req, res, next) {
         try {
             const files = await FileModel.find();
-            return res.json(files);
+            const fileDtos = [];
+            files.forEach(v => {
+                fileDtos.push(new FileDto(v));
+            })
+            console.log("In getFiles(): ");
+            return res.json(fileDtos);
         } catch(e) {
             next(e);
         }

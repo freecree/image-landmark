@@ -10,33 +10,33 @@ import Header from './components/Header';
 
 
 function App() {
-  const {store} = useContext(Context);
+    const {store} = useContext(Context);
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.checkAuth();
+    useEffect(() => {
+        console.log("In App.js");
+        if (localStorage.getItem('token')) {
+            store.checkAuth();
+        }
+    },[]);
+
+    if (!store.isAuth) {
+        return(<LoginForm/>);
     }
-  },[]);
 
-  if (!store.isAuth) {
-    return(<LoginForm/>);
-  } 
-  
-  return(
-    <section>
-      <Header/>
-      <div className='container'>
-        <BrowserRouter>
-          <Routes>
-            <Route exact path='/' element={<Main/>}/>
-            <Route path='/edit/:image' element={<Editor/>}/>
-            <Route path="*" element={<Navigate to ="/" />}/>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </section>
-    
-  )
-  
+    return(
+        <section>
+            <Header/>
+            <div className='container'>
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path='/' element={<Main/>}/>
+                        <Route path='/edit/:image' element={<Editor/>}/>
+                        <Route path="*" element={<Navigate to ="/" />}/>
+                    </Routes>
+                </BrowserRouter>
+            </div>
+        </section>
+        
+    )
 }
 export default observer(App);
