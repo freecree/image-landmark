@@ -1,8 +1,12 @@
 import {makeAutoObservable} from 'mobx';
+import {fetchFiles} from '../actions/filesActions';
+
 class FilesStore {
-    files = [];
+    files;
 
     constructor() {
+        fetchFiles();
+        console.log("In FileStore constructor");
         makeAutoObservable(this);
     }
 

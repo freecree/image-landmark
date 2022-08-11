@@ -7,7 +7,6 @@ import filesStore from "../store/filesStore.js";
 const ImageMarking = (props) => {
 
     const file = filesStore.getFileById(props.imageId);
-
     const canvasWrapperRef = useRef(null);
     const canvasRef = useRef(null);
     const radius = 5;

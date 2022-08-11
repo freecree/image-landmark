@@ -17,12 +17,6 @@ function Main() {
     const [images, setImages] = useState();
     const [modalActive, setModalActive] = useState(false);
 
-    useEffect(() => {
-        if (filesStore.files.length == 0) {
-            fetchFiles();
-        }
-    }, [])
-
     return (
         <div className="main__content">
             <h1 className="main__title">Вітаємо у системі HandMarking!</h1>
