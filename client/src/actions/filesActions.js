@@ -1,5 +1,6 @@
 import fileService from '../services/FileService';
 import storedFiles from '../store/filesStore.js';
+import loadingStates from '../enums/LoadingStates.js';
 
 
 export function fetchFiles() {
@@ -12,17 +13,29 @@ export function fetchFiles() {
     })
 }
 
-export function uploadFiles(event) {
+export async function uploadFiles(event, setIsLoadingCallback) {
+    setIsLoadingCallback(loadingStates.LOADING);
+
     const files = [...event.target.files];
-    files.forEach(file => {
+    files.forEach((file, index, arr) => {
         const data = fileService.uploadFile(file);
         data.then(function(res) {
+            console.log("Response in upload()");
             storedFiles.addFile(res.data);
         },
         function(res) {
-            console.log("Can't upload file", res?.data);
+            console.log("Can't upload file", res);
+            console.log("Can't upload file", Object.keys(res));
+        }).finally(() => {
+            //all files are loaded
+            if (index === arr.length-1) {
+                console.log("In if false");
+                setIsLoadingCallback(loadingStates.LOADED);
+                // setTimeout(() => {setIsLoadingCallback(loadingStates.NORMAL);}, 3000);
+            }
         })
     });
+    // console.log("Set is loading false");
 }
 
 export async function deleteFile(id) {

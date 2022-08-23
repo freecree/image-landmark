@@ -16,6 +16,10 @@ class FileController {
         try {
             const file = req.files.file;
 
+            if (!file) {
+                return next(ApiError.BadRequest("File is not received from client"));
+            }
+
             const parent = await FileModel.findOne({user: req.user.id, _id: req.body.parent});
             const user = await UserModel.findById(req.user.id);
 
