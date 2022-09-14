@@ -28,6 +28,8 @@ export async function uploadFiles(event, setIsLoadingCallback) {
             console.log("Can't upload file", Object.keys(res));
         }).finally(() => {
             //all files are loaded
+            console.log("Can't upload file", res?.data);
+        }).finally(() => {
             if (index === arr.length-1) {
                 console.log("In if false");
                 setIsLoadingCallback(loadingStates.LOADED);
