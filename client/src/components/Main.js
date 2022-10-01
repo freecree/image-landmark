@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState} from 'react';
 import {observer} from 'mobx-react-lite';
 
-import { Context } from '../index';
 import '../App.css';
 
 import UserService from '../services/UserService';
@@ -11,26 +10,22 @@ import filesStore from '../store/filesStore.js';
 
 import Catalog from './Catalog';
 import Modal from './Modal';
+import ErrorModal from './ErrorModal';
 import loadingStates from '../enums/LoadingStates.js';
+
 
 function Main() {
 
-    const {store} = useContext(Context);
     const [images, setImages] = useState();
     const [modalActive, setModalActive] = useState(false);
 
     // loadingStates.NORMAL = 10;
     const [isLoading, setIsLoading] = useState(loadingStates.NORMAL);
 
-
-    function upload(event) {
-        console.log("Upload event files:", event.target.files);
-        // uploadFiles(event);
-    }
-
     useEffect(() => {
-        console.log("In Main useEffect");
-        console.log("isLoading: ", isLoading);
+        console.log("Main::fetching files: ", filesStore.files);
+        filesStore.fetchFiles();
+        // console.log("isLoading: ", isLoading);
     },[isLoading])
 
     return (
@@ -57,6 +52,7 @@ function Main() {
                 </div>
                 <Catalog />
                 <Modal images={images} active={modalActive} setActive={setModalActive}/>
+                <ErrorModal/>
             </div>
         </div>
     );

@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import {Context} from "../index";
+import user from "../store/userStore";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {store} = useContext(Context);
+    // const {user} = useContext(Context);
 
     return (
         <div>
@@ -20,10 +21,10 @@ const LoginForm = () => {
                 type="password"
                 placeholder="Пароль"
             />
-            <button onClick={() => store.login(email, password)}>
+            <button onClick={() => user.login(email, password)}>
                 Логин
             </button>
-            <button onClick={() => store.registration(email, password)}>
+            <button onClick={() => user.registration(email, password)}>
                 Регистрация
             </button>
         </div>

@@ -3,23 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Store from './store/store';
-//import { Context } from 'express-validator/src/context';
 
-const store = new Store();
-
-export const Context = createContext({
-  store
-})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Context.Provider value={{store}}>
-    <App />
-  </Context.Provider>
-
-  // <React.StrictMode>
-  // </React.StrictMode>
+    <App/>
 );
 
 // If you want to start measuring performance in your app, pass a function

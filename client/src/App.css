@@ -66,8 +66,9 @@ h2 {
 }
 
 .container {
-    max-width: 1140px;
+    max-width: 1130px;
     margin: 0 auto;
+    padding: 0 5px;
 }
 
 .header {
@@ -80,10 +81,15 @@ h2 {
     min-height: 80px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .header__logo {
     font-size: 25px;
+}
+
+.header__logout {
+    cursor: pointer;
 }
 
 .main-block {

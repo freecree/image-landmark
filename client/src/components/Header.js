@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
+import { Context } from '../index';
+import user from '../store/userStore';
 
 
 const Header = () => {
@@ -7,12 +9,15 @@ const Header = () => {
         <header className='header'>
             <div className='container'>
                 <div className='header__inner'>
-                    <div className='header__logo'>HandMarking
+                    <div className='header__logo'>
+                    HandMarking
+                    </div>
+                    <div className='header__logout' onClick={() => user.logout()}>
+                    Вийти
                     </div>
                 </div>
             </div>
-			
-		</header>
+        </header>
     );
 };
 

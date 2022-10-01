@@ -1,5 +1,4 @@
 import './App.css';
-import { Context } from './index';
 import React, { useContext, useEffect, useState} from 'react';
 import { observer } from 'mobx-react-lite';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
@@ -8,18 +7,19 @@ import Editor from './components/Editor';
 import LoginForm from './components/LoginForm';
 import Header from './components/Header';
 
+import user from "./store/userStore.js";
+
 
 function App() {
-    const {store} = useContext(Context);
 
     useEffect(() => {
-        console.log("In App.js");
+        console.log("App.js::", user);
         if (localStorage.getItem('token')) {
-            store.checkAuth();
+            user.checkAuth();
         }
     },[]);
 
-    if (!store.isAuth) {
+    if (!user.isAuth) {
         return(<LoginForm/>);
     }
 
@@ -36,7 +36,6 @@ function App() {
                 </BrowserRouter>
             </div>
         </section>
-        
     )
 }
 export default observer(App);

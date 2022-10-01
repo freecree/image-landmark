@@ -10,9 +10,12 @@ export default class FileService {
             },
             onUploadProgress: function(progressEvent) {
                 let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                console.log("Loaded: ", percentCompleted);
+                // console.log("Loaded: ", percentCompleted);
             }
         });
+    }
+    static async doMarkings() {
+        return $api.get('/file/mark');
     }
     static async fetchImages() {
         return $api.get('/file');

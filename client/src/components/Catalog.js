@@ -8,7 +8,7 @@ import FileService from '../services/FileService';
 import files from '../store/filesStore.js';
 
 const Catalog = () => {
-    console.log("In Catalog: ", files.files );
+    // console.log("In Catalog: ", files.files);
     return (
         <div className='catalog-wrapper'>
             <h2>

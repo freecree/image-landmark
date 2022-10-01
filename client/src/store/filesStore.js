@@ -8,6 +8,11 @@ class FilesStore {
         makeAutoObservable(this);
     }
 
+    fetchFiles() {
+        console.log("FilesStore::fetchFiles: ");
+        this.files = fetchFiles();
+    }
+
     setFiles(files) {
         this.files = files;
     }

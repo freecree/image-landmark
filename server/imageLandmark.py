@@ -1,24 +1,26 @@
 try:
     import sys
-    sys.path.append('C:\Program Files (x86)\studywork\KPI\diploma\myproject\server\python_modules\Python38\site_packages')
+    sys.path.append('C:/Program Files (x86)/studywork/KPI/diploma/myproject/server/python_modules/Python38/site_packages')
     import os
     import mediapipe as mp
     import cv2
     import time
+    import json
+    import traceback
 
-    imagesFolder = sys.argv[1]
-    images = sys.argv[2].split(',') #images' names
-
+    files = sys.argv[1]
+    files = json.loads(files)
     dirName = os.path.dirname(__file__)
-    filesDir = os.path.join(dirName, 'files\\' + imagesFolder) #files\\628e3c52f213273edf912e12
+    filesDir = os.path.join(dirName, 'files') 
 
     mpHands = mp.solutions.hands
     hands = mpHands.Hands()
 
-    myResults = []
-    for imgName in images:
-        # myResults.append({"image": imgName, "markings": []})
-        imgPath = os.path.join(filesDir, imgName)
+
+    myResults = [[] for _ in range(len(files))]
+
+    for idx, file in enumerate(files):
+        imgPath = os.path.join(filesDir, file['path'], file['name'])
         image = cv2.imread(imgPath)
 
         imgRGB = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -26,15 +28,11 @@ try:
         if results.multi_hand_landmarks:
             for handLms in results.multi_hand_landmarks:
                 for id, lm in enumerate(handLms.landmark):
-                    myResults.append({"x": lm.x, "y": lm.y})
-                    # myResults[-1]['markings'].append({"x": lm.x, "y": lm.y})
-                    
+                    myResults[idx].append({"x": lm.x, "y": lm.y})
+
     print(myResults)
-    sys.stderr.flush()
 
-except Exception as exception:
-    print(-1)
-    #sys.stderr.write("Error")    
-
-
-
+                    # sys.stderr.write("lm:  "+str(lm.x)+'\n')
+except Exception as e:
+    #custexc: uses to handle only custom exceptions (not change!)
+    sys.stderr.write("custexc: "+traceback.format_exc())

@@ -1,11 +1,12 @@
 module.exports = class ApiError extends Error {
     status;
     errors;
+    info;
 
-    constructor(status, message, errors = []) {
+    constructor(status, message, info = {}) {
         super(message);
         this.status = status;
-        this.errors = errors;
+        this.info = info;
     }
 
     static UnauthorizedError(message = '') {
@@ -14,6 +15,10 @@ module.exports = class ApiError extends Error {
 
     static BadRequest(message, errors = []) {
         return new ApiError(400, message, errors);
+    }
+
+    static FileExist(fileName) {
+        return new ApiError(400, 'File already exists!!', {fileName, FileExistError: true});
     }
 
     static UploadError() {

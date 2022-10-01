@@ -3,7 +3,7 @@ const fileController = require('../controllers/file-controller');
 const router = new Router();
 const authMiddleware = require('../middlewares/auth-middleware'); 
 
-
+//api/file
 
 router.post('/upload', authMiddleware, fileController.uploadFile);
 router.delete('/:id', authMiddleware, fileController.deleteFile);
