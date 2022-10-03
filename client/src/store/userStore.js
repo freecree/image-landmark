@@ -3,7 +3,7 @@ import {makeAutoObservable} from "mobx";
 import { API_URL } from "../http";
 import AuthService from "../services/AuthService";
 
-class Store {
+class UserStore {
     user = {};
     isAuth = false;
     isLoading = false;
@@ -19,8 +19,20 @@ class Store {
         this.user = user;
     }
 
+    updateFreeSpace(freeSpace) {
+        this.user.freeSpace = freeSpace;
+    }
+
     setLoading(bool) {
         this.isLoading = bool;
+    }
+
+    increaseFreeSpace(val) {
+        this.user.freeSpace += val;
+    }
+
+    reduceFreeSpace(val) {
+        this.user.freeSpace -= val;
     }
 
     async login(email, password) {
@@ -61,6 +73,7 @@ class Store {
     async checkAuth() {
         this.setLoading(true);
         try {
+            console.log("userStore::checkAuth()");
             const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
@@ -72,4 +85,4 @@ class Store {
         }
     }
 }
-export default new Store();
+export default new UserStore();

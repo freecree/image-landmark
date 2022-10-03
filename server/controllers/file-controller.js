@@ -12,7 +12,7 @@ const FileDto = require('../dtos/file-dto.js');
 
 class FileController {
 
-    uploadFile = async (req, res, next) => {
+    async uploadFile(req, res, next) {
         console.log("In FileConroller::aploadFile()");
         try {
             const file = req.files.file;
@@ -21,20 +21,22 @@ class FileController {
                 return next(ApiError.BadRequest("File is not received from client"));
             }
 
-            const user = await UserModel.findById(req.user.id);
-
-            if (user.usedSpace + file.size > user.diskSpace) {
+            const user = await UserModel.findById(req.user.id); 
+            if (await user.get('usedSpace') + file.size > await user.get('diskSpace')) {
                 return next(ApiError.BadRequest("There are no space on the disk"));
             }
-            user.usedSpace += file.size;
-
             const absolutePath = `${process.env.FILE_PATH}\\${user.id}\\${file.name}`;
             const relativePath = `${user.id}`;
 
             if (fs.existsSync(absolutePath)) {
                 return next(ApiError.FileExist(file.name));
             }
-            file.mv(absolutePath);
+            await file.mv(absolutePath);
+            await user.updateOne({$inc: {usedSpace: file.size}});
+
+
+            console.log("file-controller::uploadFile change space");
+
             const type = file.name.split('.').pop();
 
             //mark image
@@ -50,11 +52,9 @@ class FileController {
                     markings: data[0]
                 });
                 dbFile.save();
-                user.save();
 
                 const fileDto = new FileDto(dbFile);
                 res.json(fileDto);
-                // res.json("upload mock");
             }, function(err) {
                 console.log("filecontroller::uploadfile markings error:\n", err);
                 return next(ApiError.BadRequest("markings error"));
@@ -79,8 +79,7 @@ class FileController {
             }
             fileService.deleteFile(file);
             await file.remove();
-            user.usedSpace -= file.size;
-            await user.save();
+            await user.updateOne({$inc: {usedSpace: -file.size}});
             // console.log("FileController::deleteFile: ", user);
             return res.json(new FileDto(file));
         } catch(e) {
@@ -98,6 +97,8 @@ class FileController {
     async getFiles(req, res, next) {
         try {
             // console.log("FileController::getFiles() req", req.user);
+            console.log("FileController::getFilesMarkings: ");
+            // await UserModel.updateMany({}, {usedSpace: 0, diskSpace: 10000000 });
             const files = await FileModel.find().where('user', req.user.id);
             const fileDtos = [];
             files.forEach(v => {
@@ -110,6 +111,8 @@ class FileController {
         
     }
     async getFilesMarkings(req, res, next) {
+        // const users = await UserModel.find();
+
     }
 }
 

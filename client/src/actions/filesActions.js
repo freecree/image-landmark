@@ -1,17 +1,17 @@
 import fileService from '../services/FileService';
 import storedFiles from '../store/filesStore.js';
 import errorsStore from '../store/errorsStore.js';
-import {mainErrorHandler, switchError} from '../handlers/errorHandler.js'
+import {mainErrorHandler, noSpaceErrorHandler, switchError} from '../handlers/errorHandler.js'
 
 import loadingStates from '../enums/LoadingStates.js';
 import user from '../store/userStore.js';
 
 
 export function fetchFiles() {
-    console.log("filesActions::fetchFiles");
+    // console.log("filesActions::fetchFiles");
     const data = fileService.fetchImages();
     data.then(function(result) {
-        console.log("filesActions::result: ", result.data);
+        // console.log("filesActions::result: ", result.data);
         storedFiles.setFiles(result.data);
     },
     function(res) {
@@ -22,16 +22,26 @@ export function fetchFiles() {
 export async function uploadFiles(event, setIsLoadingCallback) {
     console.log("filesActions::uploadFile user: ", user);
 
-    setIsLoadingCallback(loadingStates.LOADING);
 
-    console.log("filesActions::uploadFile...");
     const files = [...event.target.files];
+    const totalFilesSize = files.reduce((prev, curr, i) => {
+        console.log("reduce: ", prev.size, curr.size);
+        return prev + curr.size;
+    }, 0);
+    if (user.user.freeSpace < totalFilesSize) {
+        return noSpaceErrorHandler();
+    }
+
+
+    setIsLoadingCallback(loadingStates.LOADING);
     files.forEach((file, index, arr) => {
         const data = fileService.uploadFile(file);
         data.then(function(res) {
-            console.log("Response in upload()");
+            console.log("Response in upload()", res);
 
             storedFiles.addFile(res.data);
+            console.log("Size: ", file.size);
+            user.reduceFreeSpace(file.size);
         },
         function(res) {
             console.log("filesActions:: Can't upload file", res);
@@ -51,6 +61,8 @@ export async function uploadFiles(event, setIsLoadingCallback) {
 
 export async function deleteFile(id) {
     const response = await fileService.deleteFile(id);
+    console.log("filesActions::delete: ", response);
+    user.increaseFreeSpace(response?.data?.size);
     storedFiles.deleteFile(id);
     return response;
 }
@@ -65,4 +77,3 @@ export async function updateFile(id, data) {
     })
     return response;
 }
-

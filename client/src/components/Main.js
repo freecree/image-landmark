@@ -26,7 +26,7 @@ function Main() {
         console.log("Main::fetching files: ", filesStore.files);
         filesStore.fetchFiles();
         // console.log("isLoading: ", isLoading);
-    },[isLoading])
+    },[])
 
     return (
         <div className="main-block">

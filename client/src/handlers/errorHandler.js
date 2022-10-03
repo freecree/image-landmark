@@ -10,10 +10,10 @@ export function mainErrorHandler(resp) {
     }
 }
 
-function noSpaceErrorHandler(resp) {
-    // const message = "Виникли деякі технічні неполадки. Частина файлів не була завантажена";
-    // errorsStore.setGeneralMessage(message);
-    
+export function noSpaceErrorHandler() {
+    const message = "Не достатньо місця у сховищі. Файли не можуть бути завантажені.";
+    errorsStore.setGeneralMessage(message);
+    errorsStore.setErrorExist(true);
 }
 
 function fileExistErrorHandler(resp) {

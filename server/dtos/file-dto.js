@@ -11,5 +11,6 @@ module.exports = class FileDto {
         this.path = model.path;
         this.markings = model.markings;
         this.user = model.user;
+        this.size = model.size;
     }
 }
