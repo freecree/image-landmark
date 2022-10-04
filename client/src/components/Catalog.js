@@ -12,8 +12,14 @@ const Catalog = () => {
     return (
         <div className='catalog-wrapper'>
             <h2>
-                Ваш каталог завантажених зображень:
+                Каталог завантажених зображень
             </h2>
+            <div className='catalog-caption'>
+                <img src="./images/icon-warning.svg" alt="Warning"/>
+                <div className="catalog-caption__txt">
+                Жовтим  кольором помічені зображення, на яких не вдалось розпізнати жест
+                </div>
+            </div>
             <div className='catalog'>
                 {files.files ? files.files.map(img =>
                 <CatalogItem key={img.id}

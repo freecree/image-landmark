@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite';
 
 import {updateFile} from "../actions/filesActions.js";
 import filesStore from "../store/filesStore.js";
+import defaultMarkings from "./adds/markingsDefault.json";
 
 const ImageMarking = (props) => {
 
@@ -20,7 +21,13 @@ const ImageMarking = (props) => {
         const path = process.env.REACT_APP_FILE_DIRECTORY+`/${file.user}/${file.name}`;
         image.src = path;
 
-        file.markings.forEach(f => nodes.push({x: f.x, y: f.y}));
+        if (file.markings.length > 0) {
+            file.markings.forEach(f => nodes.push({x: f.x, y: f.y}));
+        } else {
+            console.log("json: ", defaultMarkings);
+            defaultMarkings.forEach(f => nodes.push({x: f.x, y: f.y}));
+            // JSON.parse(defaultMarkings).forEach(f => nodes.push({x: f.x, y: f.y}));
+        }
         const links = [
             [0, 1], [1, 2], [2, 3], [3, 4],
             [0, 5], [5, 6], [6, 7], [7, 8],
