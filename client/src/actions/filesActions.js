@@ -22,25 +22,23 @@ export function fetchFiles() {
 export async function uploadFiles(event, setIsLoadingCallback) {
     console.log("filesActions::uploadFile user: ", user);
 
-
     const files = [...event.target.files];
     const totalFilesSize = files.reduce((prev, curr, i) => {
-        console.log("reduce: ", prev.size, curr.size);
         return prev + curr.size;
     }, 0);
     if (user.user.freeSpace < totalFilesSize) {
         return noSpaceErrorHandler();
     }
 
-
     setIsLoadingCallback(loadingStates.LOADING);
     files.forEach((file, index, arr) => {
+        console.log("forEach >> ", file.name);
         const data = fileService.uploadFile(file);
         data.then(function(res) {
-            console.log("Response in upload()", res);
+            // console.log("Response in upload()", res);
 
-            storedFiles.addFile(res.data);
-            console.log("Size: ", file.size);
+            storedFiles.unshiftFile(res.data);
+            // console.log("Size: ", file.size);
             user.reduceFreeSpace(file.size);
         },
         function(res) {
@@ -61,7 +59,7 @@ export async function uploadFiles(event, setIsLoadingCallback) {
 
 export async function deleteFile(id) {
     const response = await fileService.deleteFile(id);
-    console.log("filesActions::delete: ", response);
+    // console.log("filesActions::delete: ", response);
     user.increaseFreeSpace(response?.data?.size);
     storedFiles.deleteFile(id);
     return response;

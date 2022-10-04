@@ -8,6 +8,8 @@ const FileSchema = new Schema({
     user: {type: ObjectId, ref: 'User'},
     markings: Object,
     isMarked: {type: Boolean, default: false},
-})
+},
+    {timestamps: true}
+)
 
 module.exports = model('File', FileSchema);

@@ -21,8 +21,8 @@ class FilesStore {
         return this.files.filter(file => file.id == id)[0];
     }
 
-    addFile(file) {
-        this.files.push(file);
+    unshiftFile(file) {
+        this.files.unshift(file);
     }
 
     deleteFile(id) {

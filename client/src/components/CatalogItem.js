@@ -9,7 +9,7 @@ import {deleteFile} from '../actions/filesActions';
 const CatalogItem = ({img}) => {
 
     const path = process.env.REACT_APP_FILE_DIRECTORY+`/${img.user}/${img.name}`;
-    console.log("CatalogItem:: ", img.name, JSON.stringify(img.markings));
+    // console.log("CatalogItem:: ", img.name, JSON.stringify(img.markings));
     return (
         <div className={img.markings.length > 0 ?
         'catalog-item catalog__item'

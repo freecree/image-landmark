@@ -13,7 +13,7 @@ const FileDto = require('../dtos/file-dto.js');
 class FileController {
 
     async uploadFile(req, res, next) {
-        console.log("In FileConroller::aploadFile()");
+        // console.log("In FileConroller::aploadFile()");
         try {
             const file = req.files.file;
 
@@ -35,14 +35,14 @@ class FileController {
             await user.updateOne({$inc: {usedSpace: file.size}});
 
 
-            console.log("file-controller::uploadFile change space");
+            // console.log("file-controller::uploadFile change space");
 
             const type = file.name.split('.').pop();
 
             //mark image
             let promise = markingService.markImage([{name: file.name, path: relativePath}]);
             promise.then(function(data) {
-                console.log("FileController::uploadFile data:\n", data);
+                // console.log("FileController::uploadFile data:\n", data);
                 const dbFile = new FileModel({
                     name: file.name,
                     type,
@@ -88,7 +88,8 @@ class FileController {
     }
     async updateFile(req, res, next) {
         try {
-            const file = await FileModel.findOneAndUpdate({ _id: req.params['id'] }, req.body, {new: true});
+            const file = await FileModel
+            .findOneAndUpdate({ _id: req.params['id'] }, req.body, {new: true});
             return res.json(new FileDto(file));
         } catch(e) {
             next(e);
@@ -96,10 +97,10 @@ class FileController {
     }
     async getFiles(req, res, next) {
         try {
-            // console.log("FileController::getFiles() req", req.user);
-            console.log("FileController::getFilesMarkings: ");
-            // await UserModel.updateMany({}, {usedSpace: 0, diskSpace: 10000000 });
-            const files = await FileModel.find().where('user', req.user.id);
+            const files = await FileModel.find()
+            .where('user', req.user.id)
+            .sort({"createdAt": -1});
+
             const fileDtos = [];
             files.forEach(v => {
                 fileDtos.push(new FileDto(v));
