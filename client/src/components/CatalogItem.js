@@ -5,11 +5,25 @@ import {observer} from 'mobx-react-lite';
 import FileService from '../services/FileService';
 import {deleteFile} from '../actions/filesActions';
 import Checkbox from './Checkbox.js';
+import ConfirmModal from './ConfirmModal.js';
 
 import deleteIcon from '../assets/icon-remove.png';
 const CatalogItem = ({img, handleClick, isCheckedList}) => {
 
     const path = process.env.REACT_APP_FILE_DIRECTORY+`/${img.user}/${img.name}`;
+    const [confirmModalActive, setConfirmModalActive] = useState(false);
+    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [imageToDelete, setImageToDelete] = useState({});
+
+    const deleteHandler = (img) => {
+        setImageToDelete(img);
+        setConfirmModalActive(true);
+    }
+
+    const onConfirm = () => {
+        setConfirmModalActive(false);
+        deleteFile(imageToDelete.id);
+    }
 
     return (
         <div className={img.markings.length > 0 ?
@@ -25,10 +39,17 @@ const CatalogItem = ({img, handleClick, isCheckedList}) => {
             </Link>
             <div className='catalog-item__caption'>
                 <div className='catalog-item__name'>{img.name}</div>
-                <img onClick={() => {deleteFile(img.id)}}
+                <img onClick={() => {deleteHandler(img)}}
                  className='catalog-item__remove-icon' src={deleteIcon}/>
             </div>
             <div className='catalog-item__under'></div>
+            <ConfirmModal
+            active = {confirmModalActive}
+            message = {
+                `Підтвердити видалення зображення ${imageToDelete.name}`
+            }
+            onConfirm = {onConfirm}
+            onCancel = {() => setConfirmModalActive(false)}/>
         </div>
     );
 };

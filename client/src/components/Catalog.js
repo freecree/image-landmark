@@ -7,22 +7,22 @@ import {deleteFile} from '../actions/filesActions.js';
 
 import files from '../store/filesStore.js';
 import Checkbox from './Checkbox.js';
+import ConfirmModal from './ConfirmModal.js';
 import deleteIcon from '../assets/icon-remove.png';
 
 const Catalog = () => {
     // console.log("In Catalog: ", files.files);
     const [isCheckedList, setIsCheckedList] = useState([]);
     const [isCheckAll, setIsCheckAll] = useState(false);
+    const [confirmModalActive, setConfirmModalActive] = useState(false);
+    const [isConfirmed, setIsConfirmed] = useState(false);
 
     const handleClick = (e) => {
         const {id, checked} = e.target;
-        console.log("handleClick: ", id, checked, isCheckedList);
         setIsCheckedList([...isCheckedList, id]);
         if (!checked) {
             setIsCheckedList(isCheckedList.filter(l => l != id));
-            console.log("if: ", isCheckedList);
         }
-        // console.log("CatalogItem::onChange: ", checked);
     }
 
     const handleSelectAll = (e) => {
@@ -34,8 +34,14 @@ const Catalog = () => {
         }
     }
 
-    const deleteImages = () => {
-        console.log("delete images...");
+    const deleteHandler = () => {
+        if (isCheckedList.length) {
+            setConfirmModalActive(true);
+        }
+    }
+
+    const onConfirm = () => {
+        setConfirmModalActive(false);
         isCheckedList.forEach(item => deleteFile(item));
         setIsCheckAll(false);
         setIsCheckedList([]);
@@ -59,7 +65,7 @@ const Catalog = () => {
                     isChecked = {isCheckAll}
                     name='Виділити всі'/>
                 </div>
-                <div onClick={deleteImages} className='catalog-heading__item'>
+                <div onClick={deleteHandler} className='catalog-heading__item'>
                     <div className='catalog-heading__text'>
                     Видалити
                     </div>
@@ -75,8 +81,14 @@ const Catalog = () => {
                 : 'Будь-ласка, завантажте зображення'
                 }
             </div>
+            <ConfirmModal
+            active = {confirmModalActive}
+            message = {
+                `Підтвердити видалення зображень (${isCheckedList.length})`
+            }
+            onConfirm = {onConfirm}
+            onCancel = {() => setConfirmModalActive(false)}/>
         </div>
-        
     );
 };
 

@@ -9,7 +9,7 @@ import {fetchFiles, uploadFiles} from '../actions/filesActions.js';
 import filesStore from '../store/filesStore.js';
 
 import Catalog from './Catalog';
-import Modal from './Modal';
+import ResultModal from './ResultModal';
 import ErrorModal from './ErrorModal';
 import loadingStates from '../enums/LoadingStates.js';
 
@@ -51,7 +51,7 @@ function Main() {
                     </button>
                 </div>
                 <Catalog />
-                <Modal images={images} active={modalActive} setActive={setModalActive}/>
+                <ResultModal images={images} active={modalActive} setActive={setModalActive}/>
                 <ErrorModal/>
             </div>
         </div>

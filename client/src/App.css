@@ -29,8 +29,35 @@ h2 {
     font-size: 16px;
 }
 
+.btn {
+    color: #fff;
+    border: none;
+    width: 213px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn_blue {
+    background: #0E3C82;
+}
+
+.btn_pink {
+    background: #FA28CC;
+}
+
+.btn_grey {
+    background: #7c848f;
+}
 
 .modal {
+    z-index: 99;
     position: fixed;
     top: 0;
     left: 0;
@@ -63,6 +90,19 @@ h2 {
     margin-top: 50px;
     border: 1px solid #000;
     padding: 10px;
+}
+
+.btn_confirm {
+    padding: 7px 30px;
+}
+
+.btn_confirm:last-child {
+    margin-left: 15px;
+}
+
+.confirm-buttons {
+    display: flex;
+    /*justify-content: center;*/
 }
 
 .container {
@@ -140,27 +180,6 @@ h2 {
     justify-content: center;
 }
 
-.btn {
-    color: #fff;
-    border: none;
-    width: 213px;
-    height: 43px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.03em;
-    cursor: pointer;
-}
-
-.btn_blue {
-    background: #0E3C82;
-}
-
-.btn_pink {
-    background: #FA28CC;
-}
 
 .btn__upload-label {
     width: 100%;
@@ -176,6 +195,11 @@ h2 {
 .btn_markings {
     margin-left: 50px;
     cursor: pointer;
+}
+
+.btn_confirm {
+    width: auto;
+    height: auto;
 }
 
 .catalog-wrapper {

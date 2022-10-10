@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-const Modal = ({images, active, setActive}) => {
+const ResultModal = ({images, active, setActive}) => {
     const [resultMarkings, setResultMarkings] = useState();
 
     useEffect(()=> {
@@ -29,4 +29,4 @@ const Modal = ({images, active, setActive}) => {
     );
 };
 
-export default Modal;
+export default ResultModal;
