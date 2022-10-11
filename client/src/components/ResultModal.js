@@ -1,20 +1,19 @@
 import React, {useEffect, useState} from 'react';
+import {observer} from 'mobx-react-lite';
+import filesStore from '../store/filesStore.js';
 
-const ResultModal = ({images, active, setActive}) => {
-    const [resultMarkings, setResultMarkings] = useState();
+const ResultModal = ({active, setActive}) => {
+    const images = filesStore.files;
 
-    useEffect(()=> {
-        if (images) {
-            setResultMarkings(JSON.stringify(images.map(img => {
-                const res = {
-                    image: img.name,
-                    markings: img.markings
-                }
-                return res;
-            })))
+    const resultMarkings = images ?
+    JSON.stringify(images.map(img => {
+        const res = {
+            image: img.name,
+            markings: img.markings
         }
-        
-    },[images])
+        return res;
+    }))
+    : '';
 
     return (
         <div className={active ? 'modal active' : 'modal'} onClick={()=> setActive(false)}>
@@ -29,4 +28,4 @@ const ResultModal = ({images, active, setActive}) => {
     );
 };
 
-export default ResultModal;
+export default observer(ResultModal);

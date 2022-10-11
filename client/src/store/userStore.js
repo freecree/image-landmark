@@ -6,7 +6,7 @@ import AuthService from "../services/AuthService";
 class UserStore {
     user = {};
     isAuth = false;
-    isLoading = false;
+    isLoaded = false;
     constructor() {
         makeAutoObservable(this);
     }
@@ -23,8 +23,8 @@ class UserStore {
         this.user.freeSpace = freeSpace;
     }
 
-    setLoading(bool) {
-        this.isLoading = bool;
+    setIsLoaded(bool) {
+        this.isLoaded = bool;
     }
 
     increaseFreeSpace(val) {
@@ -38,7 +38,6 @@ class UserStore {
     async login(email, password) {
         try {
             const response = await AuthService.login(email, password);
-            console.log("store::login: ", response);
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
@@ -50,7 +49,6 @@ class UserStore {
     async registration(email, password) {
         try {
             const response = await AuthService.registration(email, password);
-            console.log("store::registration", response);
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
@@ -71,9 +69,7 @@ class UserStore {
     }
 
     async checkAuth() {
-        this.setLoading(true);
         try {
-            console.log("userStore::checkAuth()");
             const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
@@ -81,7 +77,7 @@ class UserStore {
         } catch (e) {
             console.log(e.response?.data?.message);
         } finally {
-            this.setLoading(false);
+            this.setIsLoaded(true);
         }
     }
 }

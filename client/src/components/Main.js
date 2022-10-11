@@ -16,7 +16,6 @@ import loadingStates from '../enums/LoadingStates.js';
 
 function Main() {
 
-    const [images, setImages] = useState();
     const [modalActive, setModalActive] = useState(false);
 
     // loadingStates.NORMAL = 10;
@@ -51,7 +50,7 @@ function Main() {
                     </button>
                 </div>
                 <Catalog />
-                <ResultModal images={images} active={modalActive} setActive={setModalActive}/>
+                <ResultModal active={modalActive} setActive={setModalActive}/>
                 <ErrorModal/>
             </div>
         </div>

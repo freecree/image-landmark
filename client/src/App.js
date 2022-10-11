@@ -13,14 +13,19 @@ import user from "./store/userStore.js";
 function App() {
 
     useEffect(() => {
-        console.log("App.js::", user);
         if (localStorage.getItem('token')) {
             user.checkAuth();
+        } else {
+            user.setIsLoaded(true);
         }
     },[]);
 
     if (!user.isAuth) {
-        return(<LoginForm/>);
+        if (user.isLoaded) {
+            return(<LoginForm/>);
+        } else {
+            return(<div></div>)
+        }
     }
 
     return(
