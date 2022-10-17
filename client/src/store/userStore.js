@@ -7,6 +7,7 @@ class UserStore {
     user = {};
     isAuth = false;
     isLoaded = false;
+    entryError = '';
     constructor() {
         makeAutoObservable(this);
     }
@@ -35,14 +36,26 @@ class UserStore {
         this.user.freeSpace -= val;
     }
 
+    cleanEntryError() {
+        this.entryError = '';
+    }
+
     async login(email, password) {
         try {
+            console.log("UserStore::login");
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
+            this.cleanEntryError();
         } catch (e) {
             console.log(e.response?.data?.message);
+            if (e.response?.data?.info?.IncorrectUserData) {
+                this.entryError = 'Невірна адреса електронної \
+                 пошти або пароль';
+            } else {
+                this.entryError = 'Помилка валідації';
+            }
         }
     }
 
@@ -52,8 +65,14 @@ class UserStore {
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
+            this.cleanEntryError();
         } catch (e) {
             console.log(e.response?.data?.message);
+            if (e.response?.data?.info?.UserExist) {
+                this.entryError = 'Користувач з такою поштою уже існує';
+            } else {
+                this.entryError = 'Помилка валідації';
+            }
         }
     }
 
@@ -70,7 +89,9 @@ class UserStore {
 
     async checkAuth() {
         try {
-            const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true});
+            const response = await axios
+            .get(`${API_URL}/refresh`, {withCredentials: true});
+
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);

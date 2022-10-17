@@ -22,7 +22,14 @@ function App() {
 
     if (!user.isAuth) {
         if (user.isLoaded) {
-            return(<LoginForm/>);
+            return(
+                <section>
+                    <Header/>
+                    <div className="container">
+                        <LoginForm/>
+                    </div>
+                </section>
+                );
         } else {
             return(<div></div>)
         }

@@ -10,7 +10,14 @@ module.exports = class ApiError extends Error {
     }
 
     static UnauthorizedError(message = '') {
-        return new ApiError(401, `Пользователь не авторизован ${message}`);
+        return new ApiError(401, `User is not authorized ${message}`);
+    }
+
+    static UserExist(message = 'User with such email exist') {
+        return new ApiError(400, message, {UserExist: true});
+    }
+    static IncorrectUserData(message = 'Incorrect user data') {
+        return new ApiError(400, message, {IncorrectUserData: true});
     }
 
     static BadRequest(message, errors = []) {
@@ -18,7 +25,7 @@ module.exports = class ApiError extends Error {
     }
 
     static FileExist(fileName) {
-        return new ApiError(400, 'File already exists!!', {fileName, FileExistError: true});
+        return new ApiError(400, 'File already exists', {fileName, FileExistError: true});
     }
 
     static UploadError() {
