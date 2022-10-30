@@ -7,12 +7,19 @@ import defaultMarkings from "./adds/markingsDefault.json";
 
 const ImageMarking = (props) => {
 
+    const [resized, setResized] = useState(false);
     const file = filesStore.getFileById(props.imageId);
     const canvasWrapperRef = useRef(null);
     const canvasRef = useRef(null);
     const radius = 5;
     const nodes = [];
     let dragNode, dragPoint, imageSize;
+
+    window.addEventListener('resize', () => {
+        setResized(!resized)
+        canvasWrapperRef.current.style.width = ''; 
+        canvasWrapperRef.current.style.height = ''; 
+    })
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -24,9 +31,7 @@ const ImageMarking = (props) => {
         if (file.markings.length > 0) {
             file.markings.forEach(f => nodes.push({x: f.x, y: f.y}));
         } else {
-            console.log("json: ", defaultMarkings);
             defaultMarkings.forEach(f => nodes.push({x: f.x, y: f.y}));
-            // JSON.parse(defaultMarkings).forEach(f => nodes.push({x: f.x, y: f.y}));
         }
         const links = [
             [0, 1], [1, 2], [2, 3], [3, 4],
@@ -140,7 +145,7 @@ const ImageMarking = (props) => {
                 draw();
             }
         }, false);
-    }, []); //nodes
+    }, [resized]); //nodes
 
     async function updateMarkings() {
         const resultNodes = nodes.map((node) => {
@@ -151,18 +156,18 @@ const ImageMarking = (props) => {
             return newNode;
         });
         const response = await updateFile(file.id, {markings: resultNodes});
-        // console.log("Update resp: ", response?.data?.markings);
-        // console.log("Update file", file);
     }
 
+    //proportional resize canvas(and might wrapper) depending on wrapper sizes set by css
     function resizeImageBlock(image, imageWrapper) {
         const wrapperWidth = imageWrapper.clientWidth;
         const wrapperHeight = imageWrapper.clientHeight;
+        const containerW = document.getElementsByClassName("container")[0].clientWidth;
 
         if (image.naturalWidth > wrapperWidth) {
             const newHeight = image.naturalHeight * (wrapperWidth / image.naturalWidth);
             if (newHeight < wrapperHeight) {
-                imageWrapper.style.height = newHeight + 5 + 'px';
+                imageWrapper.style.height = newHeight + 5 + 'px'; //scroll issues
                 imageWrapper.style.width = wrapperWidth + 'px'; 
             }
             return {width: wrapperWidth, height: newHeight};
@@ -177,9 +182,9 @@ const ImageMarking = (props) => {
             <div className="editor__image-block" ref={canvasWrapperRef}>
                 <canvas className="canvas" ref={canvasRef} />
             </div>
-            <div className="editor__left-block">
-                <h2>{file.name}</h2>
-                <button onClick={updateMarkings} className="btn btn_blue editor__btn">
+            <div className="editor-block editor__left-block">
+                <h3 className="editor-block__title">{file.name}</h3>
+                <button onClick={updateMarkings} className="btn editor__btn btn_blue">
                     Зберегти розмітку
                 </button>
             </div>

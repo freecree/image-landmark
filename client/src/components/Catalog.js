@@ -9,13 +9,42 @@ import files from '../store/filesStore.js';
 import Checkbox from './Checkbox.js';
 import ConfirmModal from './ConfirmModal.js';
 import deleteIcon from '../assets/icon-remove.png';
+import user from '../store/userStore';
 
 const Catalog = () => {
-    // console.log("In Catalog: ", files.files);
     const [isCheckedList, setIsCheckedList] = useState([]);
     const [isCheckAll, setIsCheckAll] = useState(false);
     const [confirmModalActive, setConfirmModalActive] = useState(false);
     const [isConfirmed, setIsConfirmed] = useState(false);
+    const [catalogItemsNumberInRow, setCatalogItemsNumberInRow] = useState();
+    const [showMore, setShowMore] = useState(false);
+
+    useEffect(() => {
+        calcCatalogItemsInRow();
+        window.addEventListener('resize', calcCatalogItemsInRow);
+    }, [])
+
+    const calcCatalogItemsInRow = () => {
+        const containerW = document.getElementsByClassName("container")[0].clientWidth;
+        if (containerW > 950) {
+            setCatalogItemsNumberInRow(8)
+            return;
+        }
+        switch(containerW) {
+            case 950:
+                setCatalogItemsNumberInRow(6);
+                break
+            case 710:
+                setCatalogItemsNumberInRow(5);
+                break;
+            case 530:
+                setCatalogItemsNumberInRow(3);
+                break;
+            default:
+                setCatalogItemsNumberInRow(2);
+                break;
+        }
+    }
 
     const handleClick = (e) => {
         const {id, checked} = e.target;
@@ -47,11 +76,15 @@ const Catalog = () => {
         setIsCheckedList([]);
     }
 
+
     return (
         <div className='catalog-wrapper'>
-            <h2>
-                Каталог завантажених зображень
-            </h2>
+            <div className='catalog-top'>
+                <h2>
+                    Каталог завантажених зображень
+                </h2>
+                
+            </div>
             <div className='catalog-caption'>
                 <img src="./images/icon-warning.svg" alt="Warning"/>
                 <div className="catalog-caption__txt">
@@ -72,15 +105,39 @@ const Catalog = () => {
                     <img className='catalog-heading__img' src={deleteIcon} alt="Delete"/>
                 </div>
             </div>
+            {files.files ?
             <div className='catalog'>
-                {files.files ? files.files.map(img =>
-                <CatalogItem key={img.id}
-                img = {img}
-                handleClick = {handleClick}
-                isCheckedList = {isCheckedList}/>)
-                : 'Будь-ласка, завантажте зображення'
-                }
+                <div className='catalog-block catalog-block_first'>
+                    {files.files.slice(0, catalogItemsNumberInRow*2).map((img, i) =>
+                    <CatalogItem key={img.id} img = {img}
+                    handleClick = {handleClick}
+                    isCheckedList = {isCheckedList}/>)
+                    }
+                </div>
+
+                {showMore ?
+                <div className='catalog-block catalog-block_show-more'>
+                    {files.files.slice(catalogItemsNumberInRow*2).map((img, i) =>
+                    <CatalogItem key={img.id} img = {img}
+                    handleClick = {handleClick}
+                    isCheckedList = {isCheckedList}/>)
+                    }
+                </div>
+                : ''}
+                {catalogItemsNumberInRow*2 < files.files.length ?
+                <p className='catalog__show-more show-more'
+                onClick = {() => setShowMore(!showMore)}>
+                    {!showMore ?
+                    'Розгорнути весь список'
+                    :
+                    'Згорнути список'
+                    }
+                </p>
+                : ''}
             </div>
+            : ''
+            }
+
             <ConfirmModal
             active = {confirmModalActive}
             message = {

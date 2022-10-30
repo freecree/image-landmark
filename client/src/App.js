@@ -24,7 +24,6 @@ function App() {
         if (user.isLoaded) {
             return(
                 <section>
-                    <Header/>
                     <div className="container">
                         <LoginForm/>
                     </div>
@@ -37,16 +36,16 @@ function App() {
 
     return(
         <section>
-            <Header/>
-            <div className='container'>
-                <BrowserRouter>
+            <BrowserRouter>
+                <Header/>
+                <div className='container'>
                     <Routes>
                         <Route exact path='/' element={<Main/>}/>
                         <Route path='/edit/:image' element={<Editor/>}/>
                         <Route path="*" element={<Navigate to ="/" />}/>
                     </Routes>
-                </BrowserRouter>
-            </div>
+                </div>
+            </BrowserRouter>
         </section>
     )
 }

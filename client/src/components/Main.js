@@ -12,7 +12,7 @@ import Catalog from './Catalog';
 import ResultModal from './ResultModal';
 import ErrorModal from './ErrorModal';
 import loadingStates from '../enums/LoadingStates.js';
-
+import user from '../store/userStore';
 
 function Main() {
 
@@ -22,10 +22,19 @@ function Main() {
     const [isLoading, setIsLoading] = useState(loadingStates.NORMAL);
 
     useEffect(() => {
-        console.log("Main::fetching files: ", filesStore.files);
         filesStore.fetchFiles();
-        // console.log("isLoading: ", isLoading);
     },[])
+
+    const showFreeSpace = () => {
+        const space = user.user.freeSpace;
+        if (space / Math.pow(1024, 3) > 1)
+            return `${(space / Math.pow(1024, 3)).toFixed(2)} ГБ`;
+        if (space / Math.pow(1024, 2) > 1)
+            return `${(space / Math.pow(1024, 2)).toFixed(1)} МБ`;
+        if (space / 1024 > 1)
+            return `${(space / 1024).toFixed(1)} КБ`;
+        return `${space} Б`;
+    }
 
     return (
         <div className="main-block">
@@ -37,19 +46,24 @@ function Main() {
             </div> : ''}
             <div className='main__content'>
                 <h1 className="main__title">Вітаємо у системі HandMarking!</h1>
-                <div className='main__buttons'>
-                    <div className='btn btn_blue'>
+                <div className='main__buttons main-buttons'>
+                    <div className='btn main-buttons__btn btn_blue'>
                         <label htmlFor='btn__upload-input' className='btn__upload-label'>
                             Завантажити зображення
                         </label>
                         <input multiple={true} onChange={event => uploadFiles(event, setIsLoading)}
                          type='file' id='btn__upload-input'className='btn__upload-input'/>
                     </div>
-                    <button className='btn btn_pink btn_markings' onClick={() => setModalActive(true)}>
+                    <button className='btn main-buttons__btn btn_pink' onClick={() => setModalActive(true)}>
                         Отримати розмітку
                     </button>
                 </div>
-                <Catalog />
+                <div>
+                    <p className='freespace-block'>
+                        Залишилось місця: <span>{showFreeSpace()}</span>
+                    </p>
+                </div>
+                <Catalog/>
                 <ResultModal active={modalActive} setActive={setModalActive}/>
                 <ErrorModal/>
             </div>

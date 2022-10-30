@@ -4,7 +4,7 @@ export default function ConfirmModal({active, message, onConfirm, onCancel}) {
     return (
         <div className={active ? 'modal active'
         : 'modal'} onClick={()=> onCancel()}>
-            <div className='modal__content' onClick={e=>e.stopPropagation()}>
+            <div className='modal-content regular-modal-content' onClick={e=>e.stopPropagation()}>
                 <p className='modal__text'>{message}</p>
                 <div className='modal__btns confirm-buttons'>
                     <div onClick={e=>{onConfirm()}}

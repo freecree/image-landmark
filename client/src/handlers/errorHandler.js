@@ -19,7 +19,7 @@ export function noSpaceErrorHandler() {
 function fileExistErrorHandler(resp) {
     if (errorsStore.isFileExistErrorEmpty()) {
         const message = "Не вдалось завантажити наступні зображення. \
-        Зображення з такими назвами уже існують.";
+        Зображення з такими назвами уже існують:";
         errorsStore.setFileExistMessage(message);
     }
     const fileName = resp.response.data?.info?.fileName;

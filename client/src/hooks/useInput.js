@@ -60,8 +60,7 @@ export default (initialValue, validations) => {
     }
 
     const isValid = () => {
-        return valid.filter(v => v.isError).length ?
-        true : false;
+        return valid.filter(v => v.isError).length ? true : false;
     }
 
     return {

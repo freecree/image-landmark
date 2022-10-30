@@ -27,8 +27,8 @@ const CatalogItem = ({img, handleClick, isCheckedList}) => {
 
     return (
         <div className={img.markings.length > 0 ?
-        'catalog-item catalog__item'
-        : 'catalog-item catalog__item warning'}>
+        `catalog-item catalog__item`
+        : `catalog-item catalog__item warning`}>
             <Checkbox
             id = {img.id}
             handleClick = {handleClick}

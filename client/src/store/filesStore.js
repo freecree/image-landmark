@@ -9,7 +9,6 @@ class FilesStore {
     }
 
     fetchFiles() {
-        console.log("FilesStore::fetchFiles: ");
         this.files = fetchFiles();
     }
 

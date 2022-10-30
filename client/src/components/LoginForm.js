@@ -53,9 +53,10 @@ const LoginForm = () => {
 
     return (
         <div className="form">
-            <h1 className="form__title">
+            <h1 className="form__main-title">Handmarking</h1>
+            <h2 className="form__title">
                 {title}
-            </h1>
+            </h2>
             <div className="form-container">
                 <div className='input-error'>
                     {email.isDirty ? 

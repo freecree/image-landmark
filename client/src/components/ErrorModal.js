@@ -9,13 +9,15 @@ const ErrorModal = () => {
     return (
         <div className={errorsStore.errorExist ? 'modal active'
         : 'modal'} onClick={()=> errorsStore.clean()}>
-            <div className='modal__content' onClick={e=>e.stopPropagation()}>
-                    <h1 className='modal__title'>{message}</h1>
+            <div className='modal-content regular-modal-content'
+            onClick={e=>e.stopPropagation()}>
+                    <p className='modal__text'>{message}</p>
                     {errorsStore.isFileExistErrorEmpty() ? '' :
-                    errorsStore.fileExistError.files.map((fileName, idx) =>
-                        <div key={idx}>{fileName}</div>
-                    )
-                }
+                    <div className='modal__list'>
+                        {errorsStore.fileExistError.files.map((fileName, idx) =>
+                        <div key={idx}>{fileName}</div>)}
+                    </div>
+                    }
             </div>
         </div>
     )
