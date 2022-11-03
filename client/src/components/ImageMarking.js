@@ -17,8 +17,10 @@ const ImageMarking = (props) => {
 
     window.addEventListener('resize', () => {
         setResized(!resized)
-        canvasWrapperRef.current.style.width = ''; 
-        canvasWrapperRef.current.style.height = ''; 
+        if (canvasWrapperRef) {
+            canvasWrapperRef.current.style.width = ''; 
+            canvasWrapperRef.current.style.height = ''; 
+        }
     })
 
     useEffect(() => {

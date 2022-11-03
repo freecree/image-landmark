@@ -11,6 +11,8 @@ import ConfirmModal from './ConfirmModal.js';
 import deleteIcon from '../assets/icon-remove.png';
 import user from '../store/userStore';
 
+import Modal from './modals/Modal';
+
 const Catalog = () => {
     const [isCheckedList, setIsCheckedList] = useState([]);
     const [isCheckAll, setIsCheckAll] = useState(false);
@@ -70,7 +72,6 @@ const Catalog = () => {
     }
 
     const onConfirm = () => {
-        setConfirmModalActive(false);
         isCheckedList.forEach(item => deleteFile(item));
         setIsCheckAll(false);
         setIsCheckedList([]);
@@ -138,13 +139,13 @@ const Catalog = () => {
             : ''
             }
 
-            <ConfirmModal
-            active = {confirmModalActive}
-            message = {
-                `Підтвердити видалення зображень (${isCheckedList.length})`
-            }
-            onConfirm = {onConfirm}
-            onCancel = {() => setConfirmModalActive(false)}/>
+            <Modal modalData={{
+                name: 'confirm',
+                active: confirmModalActive,
+                setActive: setConfirmModalActive,
+                message: `Підтвердити видалення зображень (${isCheckedList.length})`,
+                onConfirm: onConfirm
+            }}/> 
         </div>
     );
 };

@@ -39,7 +39,7 @@ class ErrorsStore {
     }
 
     clean() {
-        // console.log("Before clean: ", this.fileExistError);
+        console.log("Before clean: ", this);
         this.fileExistError = {message: '', files: []};
         this.generalError = {message: ''};
         this.errorExist = false;

@@ -9,17 +9,15 @@ import {fetchFiles, uploadFiles} from '../actions/filesActions.js';
 import filesStore from '../store/filesStore.js';
 
 import Catalog from './Catalog';
-import ResultModal from './ResultModal';
-import ErrorModal from './ErrorModal';
+import Modal from './modals/Modal';
+
 import loadingStates from '../enums/LoadingStates.js';
 import user from '../store/userStore';
 
 function Main() {
 
-    const [modalActive, setModalActive] = useState(false);
-
-    // loadingStates.NORMAL = 10;
     const [isLoading, setIsLoading] = useState(loadingStates.NORMAL);
+    const [resultModalActive, setResultModalActive] = useState(false);
 
     useEffect(() => {
         filesStore.fetchFiles();
@@ -54,7 +52,7 @@ function Main() {
                         <input multiple={true} onChange={event => uploadFiles(event, setIsLoading)}
                          type='file' id='btn__upload-input'className='btn__upload-input'/>
                     </div>
-                    <button className='btn main-buttons__btn btn_pink' onClick={() => setModalActive(true)}>
+                    <button className='btn main-buttons__btn btn_pink' onClick={() => {setResultModalActive(true)}}>
                         Отримати розмітку
                     </button>
                 </div>
@@ -64,11 +62,17 @@ function Main() {
                     </p>
                 </div>
                 <Catalog/>
-                <ResultModal active={modalActive} setActive={setModalActive}/>
-                <ErrorModal/>
+                <Modal modalData={{
+                    name: 'result',
+                    active: resultModalActive,
+                    setActive: setResultModalActive
+                }}/>
+                <Modal modalData={{
+                    name: 'error',
+                }}/>
             </div>
         </div>
     );
 
 }
-export default Main;
+export default observer(Main);

@@ -65,6 +65,10 @@ body {
     font-weight: 400;
 }
 
+body.lock {
+    overflow: hidden;
+}
+
 p {
     margin: 0;
     padding: 0;
@@ -138,6 +142,7 @@ h3 {
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .regular-modal-content {
@@ -151,6 +156,15 @@ h3 {
     height: 500px;
     max-width: 90%;
     max-height: 90%;
+}
+
+.modal__cross-img {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
 }
 
 .modal__title {
@@ -176,7 +190,7 @@ h3 {
 }
 
 .modal__btns {
-    /*margin-top: 20px;*/
+    margin-top: 20px;
 }
 
 .btn_confirm {
@@ -273,8 +287,10 @@ h3 {
 
 .btn__upload-label {
     width: 100%;
-    text-align: center;
-    display: inline-block;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
@@ -378,11 +394,9 @@ h3 {
 
 .catalog-item {
     margin: 5px;
-    cursor: pointer;
     position: relative;
     font-weight: 600;
     margin: 5px 0px 5px 10px;
-    /*width: calc(100% / 7 - 10px);*/
     width: calc(100% / 8 - 10px);
 }
 
@@ -468,8 +482,8 @@ h3 {
     font-size: 14px;
 }
 
-.catalog__item:hover .catalog-item__remove-icon {
-    display: block;
+.catalog-item__remove-icon {
+    cursor: pointer;
 }
 
 .catalog-item__under {
