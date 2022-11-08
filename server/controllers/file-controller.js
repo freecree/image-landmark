@@ -13,7 +13,6 @@ const FileDto = require('../dtos/file-dto.js');
 class FileController {
 
     async uploadFile(req, res, next) {
-        // console.log("In FileConroller::aploadFile()");
         try {
             const file = req.files.file;
 
@@ -25,7 +24,7 @@ class FileController {
             if (await user.get('usedSpace') + file.size > await user.get('diskSpace')) {
                 return next(ApiError.BadRequest("There are no space on the disk"));
             }
-            const absolutePath = `${process.env.FILE_PATH}\\${user.id}\\${file.name}`;
+            const absolutePath = `${req.filePath}\\${user.id}\\${file.name}`;
             const relativePath = `${user.id}`;
 
             if (fs.existsSync(absolutePath)) {
@@ -34,15 +33,11 @@ class FileController {
             await file.mv(absolutePath);
             await user.updateOne({$inc: {usedSpace: file.size}});
 
-
-            // console.log("file-controller::uploadFile change space");
-
             const type = file.name.split('.').pop();
 
             //mark image
             let promise = markingService.markImage([{name: file.name, path: relativePath}]);
             promise.then(function(data) {
-                // console.log("FileController::uploadFile data:\n", data);
                 const dbFile = new FileModel({
                     name: file.name,
                     type,
@@ -59,7 +54,6 @@ class FileController {
                 console.log("filecontroller::uploadfile markings error:\n", err);
                 return next(ApiError.BadRequest("markings error"));
             })
-
         } catch(e) {
             console.log(e);
             next(ApiError.UploadError());
@@ -77,10 +71,9 @@ class FileController {
             if (!user) {
                 return res.status(400).json({message: "User not found"});
             }
-            fileService.deleteFile(file);
+            fileService.deleteFile(req, file);
             await file.remove();
             await user.updateOne({$inc: {usedSpace: -file.size}});
-            // console.log("FileController::deleteFile: ", user);
             return res.json(new FileDto(file));
         } catch(e) {
             next(e);
@@ -109,11 +102,6 @@ class FileController {
         } catch(e) {
             next(e);
         }
-        
-    }
-    async getFilesMarkings(req, res, next) {
-        // const users = await UserModel.find();
-
     }
 }
 

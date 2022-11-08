@@ -1,3 +1,4 @@
+
 const userService = require('../service/user-service');
 const {validationResult} = require('express-validator');
 const ApiError = require('../exceptions/api-error');
@@ -9,7 +10,6 @@ const spawn = require('child_process').spawn;
 
 
 class UserController {
-    
     async registration(req, res, next) {
         try {
             const errors = validationResult(req);
@@ -18,7 +18,7 @@ class UserController {
             }
             const {email, password} = req.body;
             const userData = await userService.registration(email, password);
-            fileService.createDir(new fileModel({user: userData.user.id, name: ''}));
+            fileService.createDir(req, new fileModel({user: userData.user.id, name: ''}));
 
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
             return res.json(userData);
@@ -67,7 +67,6 @@ class UserController {
         }
     }
     async getUsers(req, res, next) {
-        console.log("In Controller::getUsers()");
         try {
             const users = await userService.getAllUsers()
             return res.json(users);
@@ -75,38 +74,6 @@ class UserController {
             next(e);
         }
     }
-    async markImage(req, res, next) {
-        
-        try {
-            let promise = markingService.markImage('628e3c52f213273edf912e12', ['image7.png']);
-            promise.then(function(results) {
-                res.json(results);
-            }, function(errors) {
-                next(errors)
-                // res.json(errors);
-            })
-            
-        } catch(e) {
-            next(e);
-        }
-    }
-
-    
-    // async markImage(req, res, next) {
-        
-    //     try {
-    //         console.log("In Controller::markImage");
-    //         const process = spawn('python', ['./imageLandMark.py', 'hi']);
-    //         process.stdout.on('data', function (data) {
-    //             console.log("On data:", data.toString().replace(/'/g, '"'));
-    //             return res.json(data.toString());
-    //             //return res.json(JSON.parse(data.toString().replace(/'/g, '"')));
-    //         });
-    //     } catch(e) {
-    //         next(e);
-    //     }
-    // }
-    
 }
 
 module.exports = new UserController();

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -7,6 +8,8 @@ const mongoose = require('mongoose');
 const authRouter = require('./routes/auth.routes');
 const fileRouter = require('./routes/file.routes');
 const errorMiddleware = require('./middlewares/error-middleware');
+const filePathMiddleware = require('./middlewares/filepath-middleware.js');
+
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -18,6 +21,7 @@ app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL
 }));
+app.use(filePathMiddleware(path.resolve(__dirname, 'files')));
 app.use('/api', authRouter);
 app.use('/api/file', fileRouter);
 app.use(errorMiddleware);
