@@ -1,4 +1,3 @@
-
 const userService = require('../service/user-service');
 const {validationResult} = require('express-validator');
 const ApiError = require('../exceptions/api-error');
@@ -31,8 +30,9 @@ class UserController {
             const {email, password} = req.body;
             const userData = await userService.login(email, password);
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+            console.log("**After Login - res-cookies: ", res.cookies);
+            console.log("**After Login - req-cookies: ", req.cookies);
             return res.json(userData);
-
         } catch(e) {
             next(e);
         }
@@ -57,10 +57,15 @@ class UserController {
         }
     }
     async refresh(req, res, next) {
+        console.log("In refresh (update) !!!!");
+        console.log("In refresh: (cookies)",req.cookies);
         try {
             const {refreshToken} = req.cookies;
             const userData = await userService.refresh(refreshToken);
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+            res.cookie('refreshToken', userData.refreshToken, 
+            {maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+            });
             return res.json(userData);
         } catch(e) {
             next(e);
