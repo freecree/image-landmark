@@ -21,6 +21,7 @@ const app = express();
 //         maxAge: 5184000000 // 2 months
 //     }
 // }));
+app.enable('trust proxy');
 app.use(fileUpload({}));
 app.use(express.json());
 app.use(cookieParser());
