@@ -1,8 +1,4 @@
 {
-  "engines": {
-    "npm": ">=7.0.0 <8.0.0",
-    "node": ">=14.0.0 <15.0.0"
-  },
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",

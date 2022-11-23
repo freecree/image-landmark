@@ -8,10 +8,8 @@ import user from '../store/userStore.js';
 
 
 export function fetchFiles() {
-    // console.log("filesActions::fetchFiles");
     const data = fileService.fetchImages();
     data.then(function(result) {
-        // console.log("filesActions::result: ", result.data);
         storedFiles.setFiles(result.data);
     },
     function(res) {
@@ -20,8 +18,6 @@ export function fetchFiles() {
 }
 
 export async function uploadFiles(event, setIsLoadingCallback) {
-    console.log("filesActions::uploadFile user: ", user);
-
     const files = [...event.target.files];
     const totalFilesSize = files.reduce((prev, curr, i) => {
         return prev + curr.size;
@@ -32,34 +28,26 @@ export async function uploadFiles(event, setIsLoadingCallback) {
 
     setIsLoadingCallback(loadingStates.LOADING);
     files.forEach((file, index, arr) => {
-        console.log("forEach >> ", file.name);
         const data = fileService.uploadFile(file);
         data.then(function(res) {
-            // console.log("Response in upload()", res);
-
             storedFiles.unshiftFile(res.data);
-            // console.log("Size: ", file.size);
             user.reduceFreeSpace(file.size);
         },
         function(res) {
-            console.log("filesActions:: Can't upload file", res);
             mainErrorHandler(res);
         }).finally(() => {
             //all files are loaded
             if (index === arr.length-1) {
-                // console.log("filesActions::last file");
                 setIsLoadingCallback(loadingStates.LOADED);
                 switchError();
                 // setTimeout(() => {setIsLoadingCallback(loadingStates.NORMAL);}, 3000);
             }
         })
     });
-    // console.log("Set is loading false");
 }
 
 export async function deleteFile(id) {
     const response = await fileService.deleteFile(id);
-    // console.log("filesActions::delete: ", response);
     user.increaseFreeSpace(response?.data?.size);
     storedFiles.deleteFile(id);
     return response;
