@@ -77,7 +77,6 @@ const Catalog = () => {
         setIsCheckedList([]);
     }
 
-
     return (
         <div className='catalog-wrapper'>
             <div className='catalog-top'>

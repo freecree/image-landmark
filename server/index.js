@@ -21,7 +21,6 @@ const app = express();
 //         maxAge: 5184000000 // 2 months
 //     }
 // }));
-app.enable('trust proxy');
 app.use(fileUpload({}));
 app.use(express.json());
 app.use(cookieParser());
@@ -29,6 +28,7 @@ app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL
 }));
+app.use('/files', express.static(__dirname + '/files'));
 app.use(filePathMiddleware(path.resolve(__dirname, 'files')));
 app.use('/api', authRouter);
 app.use('/api/file', fileRouter);

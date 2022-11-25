@@ -1,5 +1,6 @@
 const fs = require('fs');
 const spawn = require('child_process').spawn;
+const path = require('path');
 
 const ApiError = require('../exceptions/api-error');
 const FileModel = require('../models/file-model');
@@ -24,7 +25,7 @@ class FileController {
             if (await user.get('usedSpace') + file.size > await user.get('diskSpace')) {
                 return next(ApiError.BadRequest("There are no space on the disk"));
             }
-            const absolutePath = `${req.filePath}\\${user.id}\\${file.name}`;
+            const absolutePath = path.resolve(req.filePath, user.id.toString(), file.name);
             const relativePath = `${user.id}`;
 
             if (fs.existsSync(absolutePath)) {
