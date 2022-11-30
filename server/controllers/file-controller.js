@@ -35,10 +35,12 @@ class FileController {
             await user.updateOne({$inc: {usedSpace: file.size}});
 
             const type = file.name.split('.').pop();
+	//console.log("After updateOne()");
 
             //mark image
             let promise = markingService.markImage([{name: file.name, path: relativePath}]);
             promise.then(function(data) {
+		//console.log("In promise...");
                 const dbFile = new FileModel({
                     name: file.name,
                     type,

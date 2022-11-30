@@ -1,12 +1,13 @@
 try:
     import sys
-    sys.path.append('C:/Program Files (x86)/studywork/KPI/diploma/myproject/server/python_modules/Python38/site_packages')
+    import traceback
+    #sys.path.append('C:/Program Files (x86)/studywork/KPI/diploma/myproject/server/python_modules/Python38/site_packages')
+    sys.path.append('/home/ec2-user/image-landmark/server/python_modules/lib/python3.7/site-packages')
     import os
     import mediapipe as mp
     import cv2
     import time
     import json
-    import traceback
 
     files = sys.argv[1]
     files = json.loads(files)

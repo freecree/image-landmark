@@ -13,6 +13,7 @@ class UserStore {
     }
 
     setAuth(bool) {
+	console.log("UserStor::In setAuth", bool);
         this.isAuth = bool;
     }
 

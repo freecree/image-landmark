@@ -13,6 +13,7 @@ import user from "./store/userStore.js";
 function App() {
 
     useEffect(() => {
+	console.log("App::Local strorage: ", localStorage.getItem('token'));
         if (localStorage.getItem('token')) {
             user.checkAuth();
         } else {
@@ -33,7 +34,7 @@ function App() {
             return(<div></div>)
         }
     }
-
+    console.log("App::user after check", user);
     return(
         <section>
             <BrowserRouter>
