@@ -4,7 +4,6 @@ import ErrorModal from '../ErrorModal.js';
 import ConfirmModal from '../ConfirmModal.js';
 
 export default function Modal({modalData}) {
-
     const bodyLock = () => {
         const lockPadding = window.innerWidth - document.body.offsetWidth + 'px';
         document.body.style.paddingRight = lockPadding;

@@ -13,7 +13,6 @@ class UserStore {
     }
 
     setAuth(bool) {
-	console.log("UserStor::In setAuth", bool);
         this.isAuth = bool;
     }
 
@@ -43,14 +42,13 @@ class UserStore {
 
     async login(email, password) {
         try {
-            console.log("UserStore::login");
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
             this.cleanEntryError();
         } catch (e) {
-            console.log(e.response?.data?.message);
+            //console.log(e.response?.data?.message);
             if (e.response?.data?.info?.IncorrectUserData) {
                 this.entryError = 'Невірна адреса електронної \
                  пошти або пароль';
@@ -68,7 +66,7 @@ class UserStore {
             this.setUser(response.data.user);
             this.cleanEntryError();
         } catch (e) {
-            console.log(e.response?.data?.message);
+            //console.log(e.response?.data?.message);
             if (e.response?.data?.info?.UserExist) {
                 this.entryError = 'Користувач з такою поштою уже існує';
             } else {
@@ -84,7 +82,7 @@ class UserStore {
             this.setAuth(false);
             this.setUser({});
         } catch (e) {
-            console.log(e.response?.data?.message);
+            //console.log(e.response?.data?.message);
         }
     }
 
@@ -97,7 +95,7 @@ class UserStore {
             this.setAuth(true);
             this.setUser(response.data.user);
         } catch (e) {
-            console.log(e.response?.data?.message);
+            //console.log(e.response?.data?.message);
         } finally {
             this.setIsLoaded(true);
         }

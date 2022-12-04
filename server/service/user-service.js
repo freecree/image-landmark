@@ -16,12 +16,13 @@ class UserService {
         const activationLink = uuid.v4();
 
         const user = await UserModel.create({email, password: hashPassword, activationLink});
+        //comment off to send activating emails
         // await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        
+
         return {...tokens, user: userDto};
     }
 
@@ -46,7 +47,7 @@ class UserService {
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        
+
         return {...tokens, user: userDto}; 
     }
 
@@ -68,14 +69,13 @@ class UserService {
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        
+
         return {...tokens, user: userDto}; 
     }
 
     async getAllUsers() {
         return UserModel.find();
     }
-
 }
 
 module.exports = new UserService();

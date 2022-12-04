@@ -6,14 +6,13 @@ import {mainErrorHandler, noSpaceErrorHandler, switchError} from '../handlers/er
 import loadingStates from '../enums/LoadingStates.js';
 import user from '../store/userStore.js';
 
-
 export function fetchFiles() {
     const data = fileService.fetchImages();
     data.then(function(result) {
         storedFiles.setFiles(result.data);
     },
     function(res) {
-        console.log("Can't fetch files from server", res?.data);
+        //console.log("Can't fetch files from server", res?.data);
     })
 }
 
@@ -59,7 +58,7 @@ export async function updateFile(id, data) {
         storedFiles.updateFile(id, result.data);
     },
     function(res) {
-        console.log("Can't update file", res?.data);
+        //console.log("Can't update file", res?.data);
     })
     return response;
 }

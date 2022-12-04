@@ -1,8 +1,9 @@
 try:
     import sys
     import traceback
-    #sys.path.append('C:/Program Files (x86)/studywork/KPI/diploma/myproject/server/python_modules/Python38/site_packages')
-    sys.path.append('/home/ec2-user/image-landmark/server/python_modules/lib/python3.7/site-packages')
+    #!!!toChange on deployment
+    sys.path.append('C:/Program Files (x86)/studywork/KPI/diploma/myproject/server/python_modules/Python38/site_packages')
+    #sys.path.append('/home/ec2-user/image-landmark/server/python_modules/lib/python3.7/site-packages')
     import os
     import mediapipe as mp
     import cv2
@@ -17,9 +18,7 @@ try:
     mpHands = mp.solutions.hands
     hands = mpHands.Hands()
 
-
     myResults = [[] for _ in range(len(files))]
-
     for idx, file in enumerate(files):
         imgPath = os.path.join(filesDir, file['path'], file['name'])
         image = cv2.imread(imgPath)
@@ -33,7 +32,6 @@ try:
 
     print(myResults)
 
-                    # sys.stderr.write("lm:  "+str(lm.x)+'\n')
 except Exception as e:
     #custexc: uses to handle only custom exceptions (not change!)
     sys.stderr.write("custexc: "+traceback.format_exc())

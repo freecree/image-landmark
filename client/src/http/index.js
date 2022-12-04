@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = 'http://44.211.157.115:5000/api';
+export const API_URL = process.env.REACT_APP_SERVER_API;
 
 const $api = axios.create({
     withCredentials: true,
@@ -23,7 +23,7 @@ $api.interceptors.response.use((config) => {
             localStorage.setItem('token', response.data.accessToken);
             return $api.request(originalRequest);
         } catch(e) {
-            console.log("Not authorized");
+            //console.log("Not authorized");
         }
     }
     throw error;

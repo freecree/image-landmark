@@ -1,7 +1,6 @@
 import errorsStore from '../store/errorsStore.js';
 
 export function mainErrorHandler(resp) {
-    console.log("mainErrorHandler::uploadErrorHandler ", resp);
     if (!resp) noSpaceErrorHandler();
     if (resp.response.data?.info?.FileExistError) {
         fileExistErrorHandler(resp);
@@ -27,7 +26,6 @@ function fileExistErrorHandler(resp) {
 }
 
 function generalErrorHandler(resp) {
-    console.log("mainErrorHandler::generalErrorHandler ", resp);
     if (errorsStore.isGeneralErrorEmpty()) {
         const message = "Виникли деякі технічні неполадки. Частина файлів не була завантажена";
         errorsStore.setGeneralMessage(message);
