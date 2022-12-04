@@ -5,22 +5,22 @@ module.exports = function(req, res, next) {
     try {
         const authorizationHeader = req.headers.authorization;
         if (!authorizationHeader) {
-            throw ApiError.UnauthorizedError('(Нету заголовка)');
+            throw ApiError.UnauthorizedError();
         }
 
         const accessToken = authorizationHeader.split(' ')[1];
         if (!accessToken) {
-            throw ApiError.UnauthorizedError('(Нету токена)');
+            throw ApiError.UnauthorizedError();
         }
 
         const userData = tokenService.validateAccessToken(accessToken);
         if (!userData) {
-            throw ApiError.UnauthorizedError('(Токен не валидный)');
+            throw ApiError.UnauthorizedError();
         }
 
         req.user = userData;
         next();
     } catch(e) {
-        return next(e)//ApiError.UnauthorizedError(e.message));
+        return next(e);
     }
 }

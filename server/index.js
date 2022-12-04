@@ -13,14 +13,6 @@ const filePathMiddleware = require('./middlewares/filepath-middleware.js');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-// app.enable('trust proxy'); // optional, not needed for secure cookies
-// app.use(express.session({
-//     // proxy : true, // add this when behind a reverse proxy, if you need secure cookies
-//     cookie : {
-//         // secure : true,
-//         maxAge: 5184000000 // 2 months
-//     }
-// }));
 app.use(fileUpload({}));
 app.use(express.json());
 app.use(cookieParser());

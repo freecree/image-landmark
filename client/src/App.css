@@ -32,6 +32,10 @@ ol, ul {
     list-style: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 blockquote, q {
     quotes: none;
 }
@@ -225,12 +229,19 @@ h3 {
     justify-content: space-between;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .header__logo {
-    font-size: 25px;
-    text-decoration: none;
-    font-weight: 600;
     color: #fff;
+}
 
+.logo__text {
+    font-size: 25px;
+    font-weight: 600;
+    margin-left: 10px;
 }
 
 .header__logout {
@@ -555,6 +566,10 @@ h3 {
     height: calc(100vh - 80px - 120px);
 }
 
+.canvas {
+    touch-action: none;
+}
+
 .editor__left-block {
     margin-left: 50px;
 }
@@ -572,12 +587,18 @@ h3 {
     margin: 50px auto 0;
 }
 
+.form-logo__img {
+    height: 45px;
+    width: 45px;
+}
+
 .form__main-title {
     text-align: center;
     margin-bottom: 10px;
 }
 
 .form__title {
+    margin-top: 10px;
     text-align: center;
     font-size: 18px;
 }
@@ -617,7 +638,7 @@ button:disabled:hover {
     padding: 12px;
 }
 .form-container {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .login-caption {
@@ -691,6 +712,7 @@ button:disabled:hover {
     }
     .container {
         width: 100%;
+        padding: 0 10px;
     }
     .catalog-item {
         width: calc(100% / 2 - 10px);
@@ -710,5 +732,8 @@ button:disabled:hover {
     .main-buttons__btn:last-child {
         margin-left: 0px;
         margin-top: 10px;
+    }
+    .main__content {
+        padding-top: 60px;
     }
 }

@@ -123,30 +123,36 @@ const ImageMarking = (props) => {
             return result;
         }
 
-        canvas.addEventListener("mousedown", function (event) {
-            let pos = getMousePosFromEvent(event);
-            dragNode = getNodeByPos(pos);
-            if (dragNode !== undefined) {
-                dragPoint = {
-                    x: pos.x - dragNode.x,
-                    y: pos.y - dragNode.y,
-                };
-            }
-        }, false );
+        ['pointerdown', 'mousedown'].forEach(evt => {
+            canvas.addEventListener(evt, function (event) {
+                let pos = getMousePosFromEvent(event);
+                dragNode = getNodeByPos(pos);
+                if (dragNode !== undefined) {
+                    dragPoint = {
+                        x: pos.x - dragNode.x,
+                        y: pos.y - dragNode.y,
+                    };
+                }
+            }, false );
+        });
 
-        canvas.addEventListener("mouseup", function () {
-            dragNode = undefined;
-        }, false);
+        ['pointerup', 'mouseup'].forEach(evt => {
+            canvas.addEventListener(event, function () {
+                dragNode = undefined;
+            }, false);
+        });
 
-        canvas.addEventListener("mousemove", function (event) {
-            let pos;
-            if (dragNode !== undefined) {
-                pos = getMousePosFromEvent(event);
-                dragNode.x = pos.x - dragPoint.x;
-                dragNode.y = pos.y - dragPoint.y;
-                draw();
-            }
-        }, false);
+        ['pointermove', 'mousemove'].forEach(evt => {
+            canvas.addEventListener(evt, function (event) {
+                let pos;
+                if (dragNode !== undefined) {
+                    pos = getMousePosFromEvent(event);
+                    dragNode.x = pos.x - dragPoint.x;
+                    dragNode.y = pos.y - dragPoint.y;
+                    draw();
+                }
+            }, false);
+        })
     }, [resized]); //nodes
 
     async function updateMarkings() {

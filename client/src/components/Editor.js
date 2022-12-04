@@ -6,7 +6,6 @@ import {observer} from 'mobx-react-lite';
 
 const Editor = () => {
     const location = useLocation();
-    console.log("In Editor: ", location);
     return (
         <div className='editop-page'>
             <div className='editor__heading'>

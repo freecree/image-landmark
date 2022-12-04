@@ -3,6 +3,7 @@ import {Context} from "../index";
 import user from "../store/userStore";
 import {observer} from 'mobx-react-lite';
 import useInput from '../hooks/useInput.js';
+import logo from '../assets/logo_circle.svg';
 
 const LoginForm = () => {
     const [authorization, setAuthorization] = useState(true);
@@ -53,7 +54,13 @@ const LoginForm = () => {
 
     return (
         <div className="form">
-            <h1 className="form__main-title">Handmarking</h1>
+            <div>
+                <div className='logo form-logo'>
+                    <img className="logo__img form-logo__img" src={logo} alt="Handmarking"/>
+                    <h1 className="logo__text">HandMarking</h1>
+                </div>
+            </div>
+            {/*<h1 className="form__main-title">Handmarking</h1>*/}
             <h2 className="form__title">
                 {title}
             </h2>

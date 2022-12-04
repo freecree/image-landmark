@@ -12,11 +12,9 @@ const fileService = require('../service/file-service');
 const FileDto = require('../dtos/file-dto.js');
 
 class FileController {
-
     async uploadFile(req, res, next) {
         try {
             const file = req.files.file;
-
             if (!file) {
                 return next(ApiError.BadRequest("File is not received from client"));
             }
@@ -35,12 +33,9 @@ class FileController {
             await user.updateOne({$inc: {usedSpace: file.size}});
 
             const type = file.name.split('.').pop();
-	//console.log("After updateOne()");
-
             //mark image
             let promise = markingService.markImage([{name: file.name, path: relativePath}]);
             promise.then(function(data) {
-		//console.log("In promise...");
                 const dbFile = new FileModel({
                     name: file.name,
                     type,
@@ -50,11 +45,9 @@ class FileController {
                     markings: data[0]
                 });
                 dbFile.save();
-
                 const fileDto = new FileDto(dbFile);
                 res.json(fileDto);
             }, function(err) {
-                console.log("filecontroller::uploadfile markings error:\n", err);
                 return next(ApiError.BadRequest("markings error"));
             })
         } catch(e) {
@@ -107,5 +100,4 @@ class FileController {
         }
     }
 }
-
 module.exports = new FileController();

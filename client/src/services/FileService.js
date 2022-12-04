@@ -10,7 +10,6 @@ export default class FileService {
             },
             onUploadProgress: function(progressEvent) {
                 let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                // console.log("Loaded: ", percentCompleted);
             }
         });
     }
