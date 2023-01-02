@@ -56,7 +56,6 @@ class FileController {
         }
     }
 
-
     async deleteFile(req, res, next) {
         try {
             const file = await FileModel.findById(req.params.id);
@@ -99,5 +98,56 @@ class FileController {
             next(e);
         }
     }
+
+    //mark files and add them to DB
+    async createExamples(req, res, next) {
+        console.log("Create examples");
+        try {
+            const examples = [{
+                "name": "example1.jpg",
+                "type": "jpg",
+                "size": "95228",
+                "path": "examples"
+            },
+            {
+                "name": "example2.jpg",
+                "type": "jpg",
+                "size": "127392",
+                "path": "examples"
+            }, 
+            {
+                "name": "example3.jpg",
+                "type": "jpg",
+                "size": "116599",
+                "path": "examples"
+            }];
+            new Promise(function(resolve, reject) {
+                let counter = 0;
+                examples.forEach((example) => {
+                    const promise = markingService.markImage([{name: example.name, path: example.path}])
+                    promise.then((data) => {
+                        example.markings = data[0];
+                        if (++counter == examples.length) {
+                            resolve();
+                        }
+                    }, (data) => {
+                        reject();
+                    });
+                });
+            }).then(() => {
+                return FileModel.insertMany(examples, (err) => {
+                    if (err) {
+                        return next(ApiError.BadRequest("Examples insertion failed"));
+                    }
+                    return res.json({message: "Examples successfully created"});
+                });
+            }, () => {
+                return res.status(400).json({message: "Failed to create examples"});
+            });
+        } catch(e) {
+            next(e);
+        }
+    }
+
 }
 module.exports = new FileController();

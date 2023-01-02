@@ -137,7 +137,7 @@ const ImageMarking = (props) => {
         });
 
         ['pointerup', 'mouseup'].forEach(evt => {
-            canvas.addEventListener(event, function () {
+            canvas.addEventListener(evt, function () {
                 dragNode = undefined;
             }, false);
         });
