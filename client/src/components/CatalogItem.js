@@ -34,8 +34,6 @@ const CatalogItem = ({img, handleClick, isCheckedList}) => {
         deleteFile(imageToDelete.id);
     }
 
-    console.log("CatalogItem::", imageName);
-
     return (
         <div className={img.markings.length > 0 ?
         `catalog-item catalog__item`

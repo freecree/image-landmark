@@ -503,6 +503,8 @@ h3 {
     background: #fff;
     padding: 3px 4px;
     z-index: 1000;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 [data-tooltip]::after {
     opacity: 0;

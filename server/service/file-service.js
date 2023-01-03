@@ -22,22 +22,29 @@ class FileService {
         })
     }
 
-    async moveTestData(userId) {
-        const testFiles = await FileModel.find({user: undefined});
-        const movedTestFiles = testFiles.map(f => {
-            f._id = mongoose.Types.ObjectId();
-            f.user = userId;
-            f.path = userId;
-            return f;
-        });
-        FileModel.insertMany(movedTestFiles);
+    moveTestData(userId) {
+        return new Promise((resolve, reject) => {
+            FileModel.find({user: undefined}, (err, testFiles) => {
+                const movedTestFiles = testFiles.map(f => {
+                    f._id = mongoose.Types.ObjectId();
+                    f.user = userId;
+                    f.path = userId;
+                    return f;
+                });
+                FileModel.insertMany(movedTestFiles);
+            });
 
-        const examplesFiles = './files/examples/*';
-        const userDir = `./files/${userId}`;
-
-        const process = spawn('cp', [examplesFiles, userDir]);
-        process.stderr.on('data', (data) => {
-            console.log("Stderr: ", data.toString());
+            const examplesFiles = './files/examples/*';
+            const userDir = `./files/${userId}`;
+            console.log("Before process");
+            const process = spawn('cp', [examplesFiles, userDir]);
+            process.stdout.on('close', code => {
+                if (code == 0) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
         });
     }
 

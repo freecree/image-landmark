@@ -18,10 +18,13 @@ class UserController {
             const {email, password} = req.body;
             const userData = await userService.registration(email, password);
             fileService.createDir(req, new fileModel({user: userData.user.id, name: userData.user.id.toString()}));
-            fileService.moveTestData(userData.user.id);
+            const movedData = fileService.moveTestData(userData.user.id);
 
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
-            return res.json(userData);
+            movedData.then(() => {
+                res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+                return res.json(userData);
+            });
+
         } catch(e) {
             next(e);
         }
