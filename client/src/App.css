@@ -616,6 +616,11 @@ h3 {
     margin: 50px auto 0;
 }
 
+.form__caption {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
 .form-logo__img {
     height: 45px;
     width: 45px;

@@ -60,10 +60,13 @@ const LoginForm = () => {
                     <h1 className="logo__text">HandMarking</h1>
                 </div>
             </div>
-            {/*<h1 className="form__main-title">Handmarking</h1>*/}
             <h2 className="form__title">
                 {title}
             </h2>
+            <p className="form__caption">
+            <span style={{fontWeight: "bold"}}>*</span> Ви можете ввести неіснуючу адресу.
+            Ваші дані не будуть використовуватись ні в яких цілях.
+            </p>
             <div className="form-container">
                 <div className='input-error'>
                     {email.isDirty ? 
