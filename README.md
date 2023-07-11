@@ -5,9 +5,11 @@ Handmarking works with static images and do such tasks:
 - performs gesture markup;
 - provides interface for markup editing;
 - returns markup data in JSON format.  
-Main screen:  
+Main screen:
+ 
 ![image](https://github.com/freecree/image-landmark/assets/62903633/7d40e464-3438-412e-af33-1c435eb89a66)
-Gesture markup screen: \n
+Gesture markup screen:
+
 ![image](https://github.com/freecree/image-landmark/assets/62903633/6320b360-00aa-4f9d-84ad-6605b2a7602f)
 
 ## Link
