@@ -33,7 +33,7 @@ class FileService {
                 });
                 FileModel.insertMany(movedTestFiles);
             });
-
+            // Copy files to user directory
             const examplesFiles = './files/examples/*';
             const userDir = `./files/${userId}`;
             console.log("Before process");
