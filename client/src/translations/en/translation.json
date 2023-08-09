@@ -1,0 +1,33 @@
+{
+    "main": {
+        "greeting": "Welcome to HandMarking system!",
+        "waiting-message": "Please wait, calculations are in progress...",
+        "free-space": "Free space:"
+    },
+    "space": {
+        "gb": "GB",
+        "mb": "MB",
+        "kb": "KB",
+        "b": "B"
+    },
+    "buttons": {
+        "upload-btn": "Upload images",
+        "get-markup": "Get markup",
+        "save-markup": "Save markup"
+    },
+    "catalog": {
+        "title": "Catalog of uploaded images",
+        "caption": "Images in which the gesture could not be recognized are marked in yellow",
+        "select-all": "Select all",
+        "delete-btn": "Delete",
+        "collapse-items": "Collapse items",
+        "expand-items": "Expand all items"
+    },
+    "modal": {
+        "confirm-message": "Confirm the deletion of images",
+        "result-markup-title": "Hand gesture markup in JSON format"
+    },
+    "editor": {
+        "title": "Markup editor"
+    }
+}
