@@ -144,7 +144,7 @@ const Catalog = () => {
                 name: 'confirm',
                 active: confirmModalActive,
                 setActive: setConfirmModalActive,
-                message: `${t('modal.confirm-message')} (${isCheckedList.length})`,
+                message: `${t('modal.confirm-deletion-images')} (${isCheckedList.length})`,
                 onConfirm: onConfirm
             }}/> 
         </div>

@@ -216,6 +216,86 @@ h3 {
     padding: 0 5px;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo__text {
+    font-size: 25px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.lang-switcher {
+    position: relative;
+    width: 65px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 2.5s ease;
+    font-size: 14px;
+}
+
+.lang-switcher__inner {
+    position: absolute;
+    width: 65px;
+    padding: 0 12px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    color: #fff;
+    z-index: 5;
+    text-transform: uppercase;
+}
+
+.lang-switcher svg {
+    fill: #fff;
+    transition: all ease .3s;
+}
+
+.lang-switcher__selected-lang {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.lang-switcher__lang-list {
+    visibility: hidden;
+}
+
+.lang-switcher__lang-list-item {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lang-switcher__lang-list-item > img {
+    width: 15px;
+    margin-right: 5px;
+}
+
+.lang-switcher__lang-list-item:hover {
+    color: #0080C8;
+}
+
+.lang-switcher.open .lang-switcher__selected-lang > svg {
+    transform: rotate(180deg);
+    fill: #0E3C82;
+}
+
+.lang-switcher.open .lang-switcher__inner {
+    background: #fff;
+    color: #0E3C82;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+.lang-switcher.open .lang-switcher__lang-list {
+    visibility: visible;
+}
+
 .header {
     background: #0080C8;
     color: #fff;
@@ -229,19 +309,17 @@ h3 {
     justify-content: space-between;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .header__logo {
     color: #fff;
 }
 
-.logo__text {
-    font-size: 25px;
-    font-weight: 600;
-    margin-left: 10px;
+.header__right {
+    display: flex;
+    align-items: center;
+}
+
+.header__lang-switcher {
+    margin-right: 30px;
 }
 
 .header__logout {
@@ -497,7 +575,7 @@ h3 {
     content: attr(data-tooltip);
     position: absolute;
     left: 0;
-    bottom: 0px;
+    bottom: -12px;
     font-size: 12px;
     border: 1px solid #000;
     background: #fff;

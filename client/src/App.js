@@ -17,29 +17,22 @@ function App() {
         }
     },[]);
 
-    if (!user.isAuth) {
-        if (user.isLoaded) {
-            return(
-                <section>
-                    <div className="container">
-                        <LoginForm/>
-                    </div>
-                </section>
-                );
-        } else {
-            return(<div></div>)
-        }
-    }
-    return(
+    return (
         <section>
             <BrowserRouter>
                 <Header/>
                 <div className='container'>
-                    <Routes>
-                        <Route exact path='/' element={<Main/>}/>
-                        <Route path='/edit/:image' element={<Editor/>}/>
-                        <Route path="*" element={<Navigate to ="/" />}/>
-                    </Routes>
+                    {user.isAuth ?
+                        <Routes>
+                            <Route exact path='/' element={<Main/>}/>
+                            <Route path='/edit/:image' element={<Editor/>}/>
+                            <Route path="*" element={<Navigate to ="/" />}/>
+                        </Routes>
+                    :
+                    <div>
+                        {user.isLoaded && <LoginForm/>}
+                    </div>
+                    }
                 </div>
             </BrowserRouter>
         </section>

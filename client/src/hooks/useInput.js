@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 
 const useValidation = (value, validations) => {
+    const [t, i18n] = useTranslation();
     const [isEmpty, setIsEmpty] = useState(
-        {isError: false, mess: "Поле не може бути пустим"}
+        {isError: false, mess: t('validation.empty-error')}
     );
     const [minLengthError, setMinLengthError] = useState(
-        {isError: false, mess: "Занадто мало символів"}
+        {isError: false, mess: t('validation.min-length-error')}
     );
     const [emailError, setEmailError] = useState(
-        {isError: false, mess: "Email введено некоректно"}
+        {isError: false, mess: t('validation.email-error')}
     );
 
     useEffect(() => {
@@ -38,7 +40,15 @@ const useValidation = (value, validations) => {
                     break;
             }
         }
-    }, [value]);
+    }, [value, i18n, t]);
+
+    useEffect(() => {
+        setIsEmpty({...isEmpty, mess: t('validation.empty-error')});
+        setMinLengthError({...minLengthError, mess: t('validation.min-length-error')})
+        setEmailError({...emailError, mess: t('validation.email-error')})
+
+    }, [t]);
+
     return [
         isEmpty,
         minLengthError,

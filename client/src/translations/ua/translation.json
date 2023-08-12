@@ -4,6 +4,26 @@
         "waiting-message": "Почекайте, будь ласка, виконуються обчислення...",
         "free-space": "Залишилось місця:"
     },
+    "header": {
+        "exit": "Вийти"
+    },
+    "login-form": {
+        "authorization_title": "Авторизація у системі",
+        "registration_title": "Реєстрація у системі",
+        "prevention": "Ви можете ввести неіснуючу адресу. Ваші дані не будуть використовуватись ні в яких цілях.",
+        "email-placeholder": "Введіть email",
+        "password": "Пароль",
+        "password-placeholder": "Введіть пароль",
+        "log-in": "Авторизуватися",
+        "register": "Зареєструватися",
+        "have-account": "Маєте акаунту?",
+        "not-have-account": "Не маєте акаунту?"
+    },
+    "validation": {
+        "empty-error": "Поле не може бути пустим",
+        "min-length-error": "Занадто мало символів",
+        "email-error": "Email введено некоректно"
+    },
     "buttons": {
         "upload-btn": "Завантажити зображення",
         "get-markup": "Отримати розмітку",
@@ -24,8 +44,11 @@
         "collapse-items": "Згорнути список"
     },
     "modal": {
-        "confirm-message": "Підтвердити видалення зображень",
-        "result-markup-title": "Розмітка жестів рук у форматі JSON"
+        "confirm-deletion-image": "Підтвердити видалення зображення",
+        "confirm-deletion-images": "Підтвердити видалення зображень",
+        "result-markup-title": "Розмітка жестів рук у форматі JSON",
+        "yes": "Так",
+        "no": "Ні"
     },
     "editor": {
         "title": "Редактор розмітки"

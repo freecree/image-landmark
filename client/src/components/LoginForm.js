@@ -1,4 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 import {Context} from "../index";
 import user from "../store/userStore";
 import {observer} from 'mobx-react-lite';
@@ -9,46 +10,48 @@ const LoginForm = () => {
     const [authorization, setAuthorization] = useState(true);
     const email = useInput('', {isEmpty: true, isEmail: true});
     const password = useInput('', {minLength: 3});
+    const [t, i18n] = useTranslation();
 
     const clean = () => {
         user.cleanEntryError();
     }
 
     const title = authorization ?
-    'Авторизація у системі'
-    : 'Реєстрація у системі'
+    t('login-form.authorization_title')
+    :
+    t('login-form.registration_title')
 
     const actionButton = authorization ?
     <button disabled={email.isValid() || password.isValid()}
     type="submit" className='btn login-btn'
     onClick={() => user.login(email.value, password.value)}>
-        Авторизуватися
+        {t('login-form.log-in')}
     </button>
     :
     <button disabled={email.isValid() || password.isValid()}
     type="submit" className='btn login-btn'
     onClick={() => user.registration(email.value, password.value)}>
-        Зареєструватися
+        {t('login-form.register')}
     </button>
 
     const caption = authorization ?
     <div className='login-caption'>
         <p className='login-caption__txt'>
-            Не маєте акаунту?
+            {t('login-form.not-have-account')}
         </p>
         <p className='login-caption__txt'
         onClick = {e=> {clean(); setAuthorization(false)}}>
-            Зареєструватися
+            {t('login-form.register')}
         </p>
     </div>
     :
     <div className='login-caption'>
         <p className='login-caption__txt'>
-            Маєте акаунт?
+            {t('login-form.have-account')}
         </p>
         <p className='login-caption__txt'
         onClick = {e=> {clean(); setAuthorization(true)}}>
-            Авторизуватися
+            {t('login-form.log-in')}
         </p>
     </div>
 
@@ -64,8 +67,7 @@ const LoginForm = () => {
                 {title}
             </h2>
             <p className="form__caption">
-            <span style={{fontWeight: "bold"}}>*</span> Ви можете ввести неіснуючу адресу.
-            Ваші дані не будуть використовуватись ні в яких цілях.
+                <span style={{fontWeight: "bold"}}>*</span>{t('login-form.prevention')}
             </p>
             <div className="form-container">
                 <div className='input-error'>
@@ -76,26 +78,26 @@ const LoginForm = () => {
                 </div>
                 <label htmlFor="uname">Email</label>
                 <input className="form-input" type="email"
-                onBlur={email.onBlur}
-                onChange={email.onChange}
-                value={email.value}
-                placeholder="Введіть email"
-                name="email"
-                required/>
+                    onBlur={email.onBlur}
+                    onChange={email.onChange}
+                    value={email.value}
+                    placeholder={t('login-form.email-placeholder')}
+                    name="email"
+                    required/>
                 <div className='input-error'>
                     {password.isDirty ? 
                     password.valid.filter(v => v.isError)
                     .map((v, i) => <p key={i}>{v.mess}</p>)
                     : ''}
                 </div>
-                <label htmlFor="psw">Пароль</label>
+                <label htmlFor="psw">{t('login-form.password')}</label>
                 <input className="form-input" type="password"
-                onBlur={password.onBlur}
-                onChange={password.onChange}
-                value={password.value}
-                placeholder="Введіть пароль"
-                name="password"
-                required/>
+                    onBlur={password.onBlur}
+                    onChange={password.onChange}
+                    value={password.value}
+                    placeholder={t('login-form.password-placeholder')}
+                    name="password"
+                    required/>
             </div>
             {actionButton}
             {caption}

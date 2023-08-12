@@ -13,7 +13,7 @@ i18next
     .use(initReactI18next)
     .init({
         debug: true,
-        lng: 'ua',
+        lng: 'en',
         interpolation: {
             escapeValue: false
         },
@@ -29,9 +29,7 @@ i18next
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    // <I18nextProvider i18n={i18next}>
-        <App/>
-    // </I18nextProvider>
+    <App/>
 );
 
 // If you want to start measuring performance in your app, pass a function
