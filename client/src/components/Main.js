@@ -18,7 +18,7 @@ function Main() {
 
     const [isLoading, setIsLoading] = useState(loadingStates.NORMAL);
     const [resultModalActive, setResultModalActive] = useState(false);
-    const {t, i18n} = useTranslation();
+    const {t, i18n} = useTranslation('');
 
     useEffect(() => {
         filesStore.fetchFiles();

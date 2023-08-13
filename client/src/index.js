@@ -6,25 +6,27 @@ import reportWebVitals from './reportWebVitals';
 
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import translation_ua from './translations/ua/translation.json';
-import translation_en from './translations/en/translation.json';
+import HttpBackend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18next
     .use(initReactI18next)
+    .use(LanguageDetector)
+    .use(HttpBackend)
     .init({
-        debug: true,
-        lng: 'en',
+        debug: false,
+        fallbackLng: 'ua',
+        supportedLngs: ['ua', 'en'],
         interpolation: {
             escapeValue: false
         },
-        resources: {
-            ua: {
-                translation: translation_ua
-            },
-            en: {
-                translation: translation_en
-            }
-        }
+        backend: {
+            loadPath: '/translations/{{lng}}/translation.json',
+        },
+        detection: {
+            order: ['cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],
+            caches: ['cookie', 'localStorage'],
+        },
     });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

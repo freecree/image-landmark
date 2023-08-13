@@ -24,7 +24,7 @@ const Header = () => {
                         <LangSwitcher className='header__lang-switcher'/>
                         {user.isAuth ?
                             <div className='header__logout' onClick={() => user.logout()}>
-                                {t('header.exit', 'exit')}
+                                {t('header.exit')}
                             </div>
                             : ''
                         }
