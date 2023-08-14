@@ -1,7 +1,9 @@
 import React from 'react'
+import {useTranslation} from 'react-i18next';
 import crossIcon from '../assets/icon-cross.svg';
 
 export default function ConfirmModal({active, closeModal, message, onConfirm}) {
+    const {t, i18n} = useTranslation();
     return (
         <div className={active ? 'modal active'
         : 'modal'} onClick={closeModal}>
@@ -10,9 +12,9 @@ export default function ConfirmModal({active, closeModal, message, onConfirm}) {
                 <p className='modal__text'>{message}</p>
                 <div className='modal__btns confirm-buttons'>
                     <div onClick={e=>{onConfirm(); closeModal()}}
-                    className='btn btn_pink btn_confirm'>Так</div>
+                    className='btn btn_pink btn_confirm'>{t('modal.yes')}</div>
                     <div onClick={closeModal}
-                    className='btn btn_grey btn_confirm'>Ні</div>
+                    className='btn btn_grey btn_confirm'>{t('modal.no')}</div>
                 </div>
             </div>
         </div>

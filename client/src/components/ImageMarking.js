@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {observer} from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
 
 import {updateFile} from "../actions/filesActions.js";
 import filesStore from "../store/filesStore.js";
@@ -8,6 +9,7 @@ import defaultMarkings from "./adds/markingsDefault.json";
 const ImageMarking = (props) => {
 
     const [resized, setResized] = useState(false);
+    const {t, i18n} = useTranslation();
     const file = filesStore.getFileById(props.imageId);
     const canvasWrapperRef = useRef(null);
     const canvasRef = useRef(null);
@@ -193,7 +195,7 @@ const ImageMarking = (props) => {
             <div className="editor-block editor__left-block">
                 <h3 className="editor-block__title">{file.name}</h3>
                 <button onClick={updateMarkings} className="btn editor__btn btn_blue">
-                    Зберегти розмітку
+                    {t('buttons.save-markup')}
                 </button>
             </div>
         </div>

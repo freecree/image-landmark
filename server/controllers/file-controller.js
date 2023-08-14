@@ -99,7 +99,10 @@ class FileController {
         }
     }
 
-    //mark files and add them to DB
+    /*
+    mark files and add them to DB.
+    Used only once during database initialization
+    */
     async createExamples(req, res, next) {
         console.log("Create examples");
         try {

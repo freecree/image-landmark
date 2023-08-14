@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
+import {useTranslation} from 'react-i18next';
 
 import FileService from '../services/FileService';
 import {deleteFile} from '../actions/filesActions';
@@ -16,6 +17,7 @@ const CatalogItem = ({img, handleClick, isCheckedList}) => {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [imageToDelete, setImageToDelete] = useState({});
     const [imageName, setImageName] = useState('');
+    const {t, i18n} = useTranslation();
 
     useEffect(() => {
         if (img.name.length > 12) {
@@ -58,7 +60,7 @@ const CatalogItem = ({img, handleClick, isCheckedList}) => {
                 name: 'confirm',
                 active: confirmModalActive,
                 setActive: setConfirmModalActive,
-                message: `Підтвердити видалення зображення ${imageToDelete.name}`,
+                message: `${t('modal.confirm-deletion-image')} ${imageToDelete.name}`,
                 onConfirm: onConfirm
             }}/> 
         </div>

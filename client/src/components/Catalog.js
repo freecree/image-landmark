@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {observer} from 'mobx-react-lite';
+import {useTranslation} from 'react-i18next';
 
 import PropTypes from 'prop-types';
 import CatalogItem from './CatalogItem';
@@ -20,6 +21,7 @@ const Catalog = () => {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [catalogItemsNumberInRow, setCatalogItemsNumberInRow] = useState();
     const [showMore, setShowMore] = useState(false);
+    const {t, i18n} = useTranslation();
 
     useEffect(() => {
         calcCatalogItemsInRow();
@@ -81,14 +83,14 @@ const Catalog = () => {
         <div className='catalog-wrapper'>
             <div className='catalog-top'>
                 <h2>
-                    Каталог завантажених зображень
+                    {t('catalog.title')}
                 </h2>
                 
             </div>
             <div className='catalog-caption'>
                 <img src="./images/icon-warning.svg" alt="Warning"/>
                 <div className="catalog-caption__txt">
-                Жовтим  кольором помічені зображення, на яких не вдалось розпізнати жест
+                    {t('catalog.caption')}
                 </div>
             </div>
             <div className='catalog-heading'>
@@ -96,11 +98,11 @@ const Catalog = () => {
                     <Checkbox
                     handleClick = {handleSelectAll}
                     isChecked = {isCheckAll}
-                    name='Виділити всі'/>
+                    name={t('catalog.select-all')}/>
                 </div>
                 <div onClick={deleteHandler} className='catalog-heading__item'>
                     <div className='catalog-heading__text'>
-                    Видалити
+                        {t('catalog.delete-btn')}
                     </div>
                     <img className='catalog-heading__img' src={deleteIcon} alt="Delete"/>
                 </div>
@@ -128,9 +130,9 @@ const Catalog = () => {
                 <p className='catalog__show-more show-more'
                 onClick = {() => setShowMore(!showMore)}>
                     {!showMore ?
-                    'Розгорнути весь список'
+                    t('catalog.collapse-items')
                     :
-                    'Згорнути список'
+                    t('catalog.expand-items')
                     }
                 </p>
                 : ''}
@@ -142,7 +144,7 @@ const Catalog = () => {
                 name: 'confirm',
                 active: confirmModalActive,
                 setActive: setConfirmModalActive,
-                message: `Підтвердити видалення зображень (${isCheckedList.length})`,
+                message: `${t('modal.confirm-deletion-images')} (${isCheckedList.length})`,
                 onConfirm: onConfirm
             }}/> 
         </div>

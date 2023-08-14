@@ -1,0 +1,56 @@
+{
+    "main": {
+        "greeting": "Welcome to HandMarking system!",
+        "waiting-message": "Please wait, calculations are in progress...",
+        "free-space": "Free space:"
+    },
+    "header": {
+        "exit": "Exit"
+    },
+    "login-form": {
+        "authorization_title": "System authorization",
+        "registration_title": "System registration",
+        "prevention": "You can enter a non-existent address. Your data will not be used for any purpose.",
+        "email-placeholder": "Enter your email",
+        "password": "Password",
+        "password-placeholder": "Enter your password",
+        "log-in": "Log in",
+        "register": "Register",
+        "have-account": "Do you have an account?",
+        "not-have-account": "Don't have an account?"
+    },
+    "validation": {
+        "empty-error": "The field can't be empty",
+        "min-length-error": "Too few characters",
+        "email-error": "Email is not correct"
+    },
+    "buttons": {
+        "upload-btn": "Upload images",
+        "get-markup": "Get markup",
+        "save-markup": "Save markup"
+    },
+    "space": {
+        "gb": "GB",
+        "mb": "MB",
+        "kb": "KB",
+        "b": "B"
+    },
+    "catalog": {
+        "title": "Catalog of uploaded images",
+        "caption": "Images in which the gesture could not be recognized are marked in yellow",
+        "select-all": "Select all",
+        "delete-btn": "Delete",
+        "collapse-items": "Collapse items",
+        "expand-items": "Expand all items"
+    },
+    "modal": {
+        "confirm-deletion-image": "Confirm the deletion of image",
+        "confirm-deletion-images": "Confirm the deletion of images",
+        "result-markup-title": "Hand gesture markup in JSON format",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "editor": {
+        "title": "Markup editor"
+    }
+}
