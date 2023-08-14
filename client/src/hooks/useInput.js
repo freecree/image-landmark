@@ -40,8 +40,9 @@ const useValidation = (value, validations) => {
                     break;
             }
         }
-    }, [value, i18n, t]);
+    }, [value]);
 
+    /* update error messages when change language */
     useEffect(() => {
         setIsEmpty({...isEmpty, mess: t('validation.empty-error')});
         setMinLengthError({...minLengthError, mess: t('validation.min-length-error')})
