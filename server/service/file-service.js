@@ -36,8 +36,7 @@ class FileService {
             // Copy files to user directory
             const examplesFiles = './files/examples/*';
             const userDir = `./files/${userId}`;
-            console.log("Before process");
-            const process = spawn('cp', [examplesFiles, userDir]);
+            const process = spawn('cp', [examplesFiles, userDir], {shell: true});
             process.stdout.on('close', code => {
                 if (code == 0) {
                     resolve();

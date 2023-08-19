@@ -44,7 +44,7 @@ class FileController {
                     user: user._id,
                     markings: data[0]
                 });
-                dbFile.save();
+		dbFile.save();
                 const fileDto = new FileDto(dbFile);
                 res.json(fileDto);
             }, function(err) {
