@@ -1,18 +1,20 @@
 # Handmarking
 ## Description
-Handmarking is a web system that provides with hand markup.
-Handmarking works with static images and do such tasks:
-- performs gesture markup;
-- provides interface for markup editing;
-- returns markup data in JSON format.
- 
-### Main screen:
- ![image](https://github.com/freecree/image-landmark/assets/62903633/7d40e464-3438-412e-af33-1c435eb89a66)
-### Gesture markup screen:
-![image](https://github.com/freecree/image-landmark/assets/62903633/6320b360-00aa-4f9d-84ad-6605b2a7602f)
-
-## Link
-http://44.211.157.115:8080/
-
+Handmarking is a web system that provides user with hand markup. You can upload images of hand gestures, after performing markup you can get the result in JSON format or edit the markup using editor interface. The system saves all your images with markup data in the storage, so you will not lose your data after exit. Handmarking system maintains two languages: english and urkainian.
 ## Usage
-Design of Handmarking is intuitive. Before using the system you need to pass autorization. For simplicity and your security you can use your non-existent email.Or you can use the real email. Anyway your data will not be used for any purpose.
+To use the system follow the link: http://handmarking.pp.ua/.
+### Autorization
+Firstly you need to authorize in the system by entering your email and password. 
+
+![image](https://github.com/freecree/image-landmark/assets/62903633/99d388b0-b05e-41e9-91f1-841aab7584bd)
+
+### Main screen
+Then you have the main screen of the system. Here you can uppload or delete images, get markup or go to editor window by clicking on appropriate image. 
+
+![image](https://github.com/freecree/image-landmark/assets/62903633/2c2a9629-9cfd-4458-82bc-3f0eb784756d)
+### Editor
+In editor interface you can change the markup by grapping and moving pink dots to achieve perfect accuracy. Don't forget to save the changes by clicking save button!
+
+![image](https://github.com/freecree/image-landmark/assets/62903633/bba87912-dfa4-43c0-9e02-84bba2cb1b67)
+
+
