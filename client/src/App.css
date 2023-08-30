@@ -318,12 +318,9 @@ h3 {
     align-items: center;
 }
 
-.header__lang-switcher {
-    margin-right: 30px;
-}
-
 .header__logout {
     cursor: pointer;
+    margin-left: 30px;
 }
 
 .main-block {
@@ -837,6 +834,16 @@ button:disabled:hover {
     }
 }
 @media screen and (max-width: 476px) {
+    .logo__img {
+        width: 30px;
+    }
+    .logo__text {
+        font-size: 18px;
+        margin-left: 0;
+    }
+    .header__logout {
+        margin-left: 15px;
+    }
     .main__buttons {
         flex-direction: column;
         align-items: center;
