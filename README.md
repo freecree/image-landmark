@@ -2,7 +2,7 @@
 ## Description
 Handmarking is a web system that provides user with hand markup. You can upload images of hand gestures, after performing markup you can get the result in JSON format or edit the markup using editor interface. The system saves all your images with markup data in the storage, so you will not lose your data after exit. Handmarking system maintains two languages: english and urkainian.
 ## Usage
-To use the system follow the link: http://handmarking.pp.ua/.
+To use the system follow the link: http://51.20.77.94/.
 ### Autorization
 Firstly you need to authorize in the system by entering your email and password. 
 
